@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------
 Test set: com.br.vxassist.VxPayofApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.485 s - in com.br.vxassist.VxPayofApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.755 s <<< FAILURE! - in com.br.vxassist.VxPayofApplicationTests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.DatabaseException: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Connection is broken: "java.net.ConnectException: Connection refused (Connection refused): localhost" [90067-200]
+Caused by: liquibase.exception.DatabaseException: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Connection is broken: "java.net.ConnectException: Connection refused (Connection refused): localhost" [90067-200]
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Connection is broken: "java.net.ConnectException: Connection refused (Connection refused): localhost" [90067-200]
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+
