@@ -5,8 +5,8 @@ com/br/vxassist/model/Despesa.class
 com/br/vxassist/exception/NotFoundException.class
 com/br/vxassist/repository/DespesaRepository.class
 com/br/vxassist/repository/FornecedorRepository.class
-com/br/vxassist/repository/ExtratoRepository.class
 com/br/vxassist/model/Estado.class
+com/br/vxassist/repository/ExtratoRepository.class
 com/br/vxassist/model/TipoConta.class
 com/br/vxassist/repository/EstadoRepository.class
 com/br/vxassist/exception/IdNotFound.class
@@ -21,8 +21,8 @@ com/br/vxassist/repository/LancamentoContaCartaoRepository.class
 com/br/vxassist/repository/TipoDespesaRepository.class
 com/br/vxassist/util/Util.class
 com/br/vxassist/repository/ContaRepository.class
-com/br/vxassist/repository/TipoContaRepository.class
 com/br/vxassist/model/Fornecedor.class
+com/br/vxassist/repository/TipoContaRepository.class
 com/br/vxassist/model/Extrato.class
 com/br/vxassist/validacao/Validacao.class
 com/br/vxassist/model/TipoInformacaoExtra.class
