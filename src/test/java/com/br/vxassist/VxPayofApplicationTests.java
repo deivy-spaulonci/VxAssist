@@ -1,0 +1,13 @@
+package com.br.vxassist;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class VxPayofApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

@@ -1,0 +1,46 @@
+atulizacoes
+
+
+    ResourceSupport changed to RepresentationModel
+    Resource changed to EntityModel
+    Resources changed to CollectionModel
+    PagedResources changed to PagedModel
+    ResourceAssembler changed to RepresentationModelAssembler
+
+
+    tipoDespesaServiceImpl.findByNome("p").forEach(tipodespesa ->{
+        System.out.println(tipodespesa.getNome());
+    });tipoDespesaServiceImpl.findByNome("p").forEach(tipodespesa ->{
+        System.out.println(tipodespesa.getNome());
+    });
+
+    Predicate predicate = QTipoDespesa.tipoDespesa.nome.containsIgnoreCase("Ali");
+
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("nome").ascending());
+    tipoDespesaJpaRepository.findAll(teste, paging);
+
+    QTipoDespesa tipoDespesa = QTipoDespesa.tipoDespesa;
+    JPAQuery<TipoDespesa> query = new JPAQuery<TipoDespesa>(tipoDespesa);
+
+    final Query<?> query = Query.<TipoDespesa>builder()
+            .filter(filter)
+            .sor
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("nome").ascending());
+    tipoDespesaJpaRepository.find(query);
+    Page<TipoDespesa> tipoDespesas = tipoDespesaJpaRepository.findAll(predicate, pageable);
+
+    CollectionModel<TipoDespesaModel> collectionModel =  tipoDespesaModelAssembler.toCollectionModel(tipoDespesas);
+
+
+
+
+    TipoDespesa tipoDespesa = tipoDespesaServiceImpl.findById(id).orElseThrow(() -> new EntityNotFoundException("Nenhuma tipo de despesa encontrada com o id: " + id));
+            return tipoDespesaJpaRepository.findById(id)
+                    .map(tipoDespesaModelAssembler::toModel)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+    return ResponseEntity.ok(this.tipoDespesaServiceImpl.findById(id).orElseThrow(EntityNotFoundException::new));
+
+
+		//bindings.bind(String.class).first((SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase);
+		//bindings.bind(qDespesa.valor).first(NumberExpression::goe); goe -> mior ou iqual que

@@ -1,0 +1,35 @@
+ID,NOME
+1,Cartão
+2,Caixa
+3,Horario de Entrada
+4,Horario de Saída
+5,Perido Total
+6,Operador
+7,Numero de Controle
+8,DOC
+9,AUT
+10,Pista
+11,Classe
+12,Arrecadador
+13,Ticket
+14,Comprovante
+15,Estabelecimento
+16,CDC
+17,GNF
+18,CCF
+19,Extrato
+20,CV
+21,Terminal
+22,PDV
+23,NSU autorizador
+24,LOTE
+25,EC
+26,Recibo
+27,Cupom
+28,COO
+29,Passagem
+30,Número de Série
+31,Via
+32,Sequencia
+33,Sat. No
+34,Serial
