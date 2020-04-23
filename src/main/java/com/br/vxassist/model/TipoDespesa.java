@@ -1,11 +1,14 @@
 package com.br.vxassist.model;
 
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
+@RestResource
 @Entity
 @Table(name = "TIPO_DESPESA")
 public class TipoDespesa implements Serializable {

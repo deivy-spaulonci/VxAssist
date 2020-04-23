@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@RestResource
 @Entity
 @Table(name = "DESPESA")
 public class Despesa implements Serializable {
