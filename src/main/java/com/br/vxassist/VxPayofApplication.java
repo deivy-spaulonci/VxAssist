@@ -1,5 +1,6 @@
 package com.br.vxassist;
 
+import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -17,14 +18,19 @@ public class VxPayofApplication {
 //    @PersistenceContext
 //    private EntityManager entityManager;
 
+
     public static void main(String[] args) {
-        SpringApplication.run(VxPayofApplication.class, args);
+        //CORRE MODO FX
+        Application.launch(AppFx.class, args);
+        //CORRE O SPRING NOMAL
+        //SpringApplication.run(VxPayofApplication.class, args);
     }
 
     @Bean
     public CommandLineRunner demo() {
         return (args) -> {
             logger.info(" -> INICIANDO VxAssit...");
+
             //throw new GenericErrorException("Código de Barras inválido");
             //                QTipoDespesa qTipoDespesa = QTipoDespesa.tipoDespesa;
 //                JPAQuery<?> query = new JPAQuery<Void>(entityManager);
