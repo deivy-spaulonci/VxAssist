@@ -20,10 +20,11 @@ public class VxPayofApplication {
 
 
     public static void main(String[] args) {
-        //CORRE MODO FX
-        Application.launch(AppFx.class, args);
         //CORRE O SPRING NOMAL
         //SpringApplication.run(VxPayofApplication.class, args);
+
+        //CORRE MODO FX
+        Application.launch(AppFx.class, args);
     }
 
     @Bean

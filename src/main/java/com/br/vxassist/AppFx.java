@@ -27,11 +27,17 @@ public class AppFx extends Application {
     private BorderPane borderPane = new BorderPane();
     private ConfigurableApplicationContext applicationContext;
 
+    @Autowired
+    TipoDespesaRepository tipoDespesaRepository;
+
     @Override
-    public void init() {
-        //applicationContext = new SpringApplicationBuilder(VxassistfxApplication.class).run();
+    public void init() throws Exception{
+        //applicationContext = new SpringApplicationBuilder(VxPayofApplication.class).run();
         this.applicationContext = new SpringApplicationBuilder().sources(VxPayofApplication.class).run();
-        this.applicationContext.getBeanFactory().autowireBean(DespesaView.class);
+        this.applicationContext.getBeanFactory().autowireBean(this);
+        //this.applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+
+        this.applicationContext.getBean(TipoDespesaRepository.class);
     }
 
     @Override
@@ -71,7 +77,7 @@ public class AppFx extends Application {
         btFornecedor.setMaxWidth(Double.MAX_VALUE);
 
         btDespesa.setOnAction(event -> {
-            DespesaView despesaView =  new DespesaView();
+            DespesaView despesaView =  new DespesaView(this.applicationContext);
             borderPane.setCenter(despesaView);
             borderPane.setAlignment(despesaView, Pos.TOP_CENTER);
         });
