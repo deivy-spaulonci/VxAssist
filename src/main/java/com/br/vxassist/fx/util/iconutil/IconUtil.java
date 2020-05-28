@@ -1,4 +1,4 @@
-package com.br.vxassist.fx.view.iconutil;
+package com.br.vxassist.fx.util.iconutil;
 
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.javafx.IconNode;

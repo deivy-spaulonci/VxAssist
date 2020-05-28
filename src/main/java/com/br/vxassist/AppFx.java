@@ -1,8 +1,8 @@
 package com.br.vxassist;
 
+import com.br.vxassist.fx.view.DespesaListView;
 import com.br.vxassist.fx.view.DespesaView;
-import com.br.vxassist.fx.view.iconutil.IconUtil;
-import com.br.vxassist.model.TipoDespesa;
+import com.br.vxassist.fx.util.iconutil.IconUtil;
 import com.br.vxassist.repository.TipoDespesaRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -60,7 +60,9 @@ public class AppFx extends Application {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+        stage.setTitle("VxAssistFx");
         stage.show();
+
     }
 
     public ToolBar createToolBarMenu(){
@@ -77,9 +79,10 @@ public class AppFx extends Application {
         btFornecedor.setMaxWidth(Double.MAX_VALUE);
 
         btDespesa.setOnAction(event -> {
-            DespesaView despesaView =  new DespesaView(this.applicationContext);
-            borderPane.setCenter(despesaView);
-            borderPane.setAlignment(despesaView, Pos.TOP_CENTER);
+            //DespesaView despesaView =  new DespesaView(this.applicationContext);
+            DespesaListView despesaView =  new DespesaListView(this.applicationContext);
+            //borderPane.setCenter(despesaView);
+            //borderPane.setAlignment(despesaView, Pos.TOP_CENTER);
         });
 
         final ToolBar toolBar = new ToolBar(btDespesa,btConta,btFornecedor);

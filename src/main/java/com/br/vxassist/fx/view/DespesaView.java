@@ -2,36 +2,47 @@ package com.br.vxassist.fx.view;
 
 import com.br.vxassist.fx.view.comp.AutoCompleteBox;
 import com.br.vxassist.fx.view.comp.TextFieldMoney;
-import com.br.vxassist.fx.view.iconutil.IconUtil;
-import com.br.vxassist.model.FormaPagamento;
-import com.br.vxassist.model.Fornecedor;
-import com.br.vxassist.model.TipoDespesa;
-import com.br.vxassist.model.TipoInformacaoExtra;
+import com.br.vxassist.fx.util.iconutil.IconUtil;
+import com.br.vxassist.model.*;
+import com.br.vxassist.repository.FormaPagamentoRepository;
 import com.br.vxassist.repository.FornecedorRepository;
 import com.br.vxassist.repository.TipoDespesaRepository;
+import com.br.vxassist.repository.TipoInformacaoExtraRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import jiconfont.icons.font_awesome.FontAwesome;
+import org.graalvm.compiler.phases.graph.ScheduledNodeIterator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class DespesaView extends BorderPane {
+public class DespesaView extends Stage {
     @Autowired
     TipoDespesaRepository tipoDespesaRepository;
     @Autowired
     FornecedorRepository fornecedorRepository;
+    @Autowired
+    FormaPagamentoRepository formaPagamentoRepository;
+    @Autowired
+    TipoInformacaoExtraRepository tipoInformacaoExtraRepository;
+
+    ObservableList<TipoDespesa> listTipoDespesa = FXCollections.observableArrayList();
+    ObservableList<Fornecedor> listaFornecedor = FXCollections.observableArrayList();
+    ObservableList<FormaPagamento> listaFormaPagamento = FXCollections.observableArrayList();
+    ObservableList<TipoInformacaoExtra> listaTipoInformacaoExtra = FXCollections.observableArrayList();
+
+    private TableView<InformacaoExtra> tabelaInfoExtra = new TableView<InformacaoExtra>();
+    private ObservableList<InformacaoExtra> dataInformacaoExtra = FXCollections.observableArrayList();
 
     private ComboBox<TipoDespesa> comboTipoDespesa = new ComboBox<>();
     private ComboBox<Fornecedor> comboFornecedor = new ComboBox<>();
@@ -47,7 +58,8 @@ public class DespesaView extends BorderPane {
         applicationContext.getBeanFactory().autowireBean(this);
         applicationContext.getBean(TipoDespesaRepository.class);
         applicationContext.getBean(FornecedorRepository.class);
-
+        applicationContext.getBean(FormaPagamentoRepository.class);
+        applicationContext.getBean(TipoInformacaoExtraRepository.class);
 
         this.initComponents();
 
@@ -69,8 +81,6 @@ public class DespesaView extends BorderPane {
         formCadastro.add(this.comboFormaPagamento, 1,3);
         formCadastro.add(new Label("Valor: "), 0,4);
         formCadastro.add(this.campoValor, 1,4);
-//        formCadastro.add(new Label("Observação"), 2,0);
-//        formCadastro.add(this.campoObs, 2, 1);
 
         formCadastro.setHgap(8);
         formCadastro.setVgap(8);
@@ -78,7 +88,7 @@ public class DespesaView extends BorderPane {
 
         VBox boxInfoExtra = new VBox(new Label("Informação Extra"));
         GridPane formInfoExtra = new GridPane();
-        formInfoExtra.add(new Label("Número: "), 0,0);
+        formInfoExtra.add(new Label("N: "), 0,0);
         formInfoExtra.add(this.campoNumero, 1,0);
         formInfoExtra.add(new Label(" Tipo: "), 2,0);
         formInfoExtra.add(this.comboTipoInformacaoExtra, 3,0);
@@ -92,19 +102,26 @@ public class DespesaView extends BorderPane {
         HBox linhaFormCadastro = new HBox(formCadastro, boxInfoExtra, new VBox(new Label("Observação: "), this.campoObs));
         linhaFormCadastro.setStyle("-fx-background-color: #DCDCDC;");
 
-        this.setTop(new VBox(titulo, linhaFormCadastro, this.btSalvar));
+        Scene scene = new Scene(new VBox(titulo, linhaFormCadastro, this.btSalvar));
+        setScene(scene);
+        show();
 
     }
 
     public void initComponents(){
 
-        ObservableList<TipoDespesa> listTipoDespesa = FXCollections.observableList(tipoDespesaRepository.findAll());
-        ObservableList<Fornecedor> listaFornecedor = FXCollections.observableList(fornecedorRepository.findAll());
+        this.listTipoDespesa = FXCollections.observableList(tipoDespesaRepository.findAll());
+        this.listaFornecedor = FXCollections.observableList(fornecedorRepository.findAll());
+        this.listaFormaPagamento = FXCollections.observableList(formaPagamentoRepository.findAll());
+        this.listaTipoInformacaoExtra = FXCollections.observableList(tipoInformacaoExtraRepository.findAll());
 
         this.comboTipoDespesa = new ComboBox<TipoDespesa>(listTipoDespesa);
+
         this.comboFornecedor = new ComboBox<Fornecedor>(listaFornecedor);
         new AutoCompleteBox(this.comboFornecedor);
-
+        this.comboFornecedor.setMaxWidth(400);
+        this.comboFormaPagamento = new ComboBox<FormaPagamento>(listaFormaPagamento);
+        this.comboTipoInformacaoExtra = new ComboBox<TipoInformacaoExtra>(listaTipoInformacaoExtra);
 
         this.campoObs.setPrefRowCount(4);
         this.campoObs.setPrefColumnCount(20);
@@ -121,5 +138,6 @@ public class DespesaView extends BorderPane {
                 this.campoValor.setText(new DecimalFormat("#,##0").format(longVal));
             }
         });
+        this.campoValor.setMaxWidth(200);
     }
 }
