@@ -1,14 +1,12 @@
 package com.br.vxassist;
 
+import com.br.vxassist.fx.util.Util;
 import com.br.vxassist.fx.view.DespesaListView;
-import com.br.vxassist.fx.view.DespesaView;
-import com.br.vxassist.fx.util.iconutil.IconUtil;
 import com.br.vxassist.repository.TipoDespesaRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,9 +68,9 @@ public class AppFx extends Application {
         Button btConta = new Button();
         Button btFornecedor = new Button();
 
-        btDespesa.setGraphic(IconUtil.getIcon(FontAwesome.MONEY));
-        btConta.setGraphic(IconUtil.getIcon(FontAwesome.BARCODE));
-        btFornecedor.setGraphic(IconUtil.getIcon(FontAwesome.CUBE));
+        btDespesa.setGraphic(Util.getIcone(FontAwesome.MONEY, null, null));
+        btConta.setGraphic(Util.getIcone(FontAwesome.BARCODE, null, null));
+        btFornecedor.setGraphic(Util.getIcone(FontAwesome.CUBE, null, null));
 
         btDespesa.setMaxWidth(Double.MAX_VALUE);
         btConta.setMaxWidth(Double.MAX_VALUE);

@@ -1,24 +1,29 @@
 package com.br.vxassist.fx.view;
 
+import com.br.vxassist.fx.service.DespesaService;
 import com.br.vxassist.fx.util.Util;
-import com.br.vxassist.fx.view.comp.colunas.*;
+import com.br.vxassist.fx.view.comp.AutoCompleteComboBoxListener;
+import com.br.vxassist.fx.view.comp.colunas.ColunaData;
+import com.br.vxassist.fx.view.comp.colunas.ColunaInteger;
+import com.br.vxassist.fx.view.comp.colunas.ColunaMoeda;
+import com.br.vxassist.fx.view.comp.colunas.ColunaObjeto;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.FormaPagamento;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.model.TipoDespesa;
-import com.br.vxassist.repository.*;
+import com.br.vxassist.repository.FormaPagamentoRepository;
+import com.br.vxassist.repository.FornecedorRepository;
+import com.br.vxassist.repository.TipoDespesaRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.Border;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -32,44 +37,98 @@ public class DespesaListView extends Stage {
     FornecedorRepository fornecedorRepository;
     @Autowired
     FormaPagamentoRepository formaPagamentoRepository;
+
     @Autowired
-    DespesaRepository despesaRepository;
+    private DespesaService despesaService;
+
+    private ConfigurableApplicationContext applicationContext;
 
     private ObservableList<TipoDespesa> listTipoDespesa = FXCollections.observableArrayList();
     private ObservableList<Fornecedor> listaFornecedor = FXCollections.observableArrayList();
     private ObservableList<FormaPagamento> listaFormaPagamento = FXCollections.observableArrayList();
 
+    private ComboBox<TipoDespesa> filtroTipoDespesa = new ComboBox<TipoDespesa>();
+    private ComboBox<Fornecedor> filtroFornecedor = new ComboBox<Fornecedor>();
+    private ComboBox<FormaPagamento> filtroFormaPagamento = new ComboBox<FormaPagamento>();
+    private DatePicker datePickerInicio = new DatePicker();
+    private DatePicker datePickerFim = new DatePicker();
+    private HBox gridPesquisa;
+
+    private ContextMenu cm = new ContextMenu();
     private TableView<Despesa> tabela = new TableView<Despesa>();
     private ObservableList<Despesa> data = FXCollections.observableArrayList();
     private FilteredList<Despesa> filteredData;
     private BigDecimal valorTotal = BigDecimal.ZERO;
 
     // rodape
-    private Label total = new Label("0,00");
+    private Text total = new Text("0,00");
 
     private BorderPane mainPane = new BorderPane();
 
     public DespesaListView(ConfigurableApplicationContext applicationContext){
+        setTitle("Despesas");
         applicationContext.getBeanFactory().autowireBean(this);
         applicationContext.getBean(TipoDespesaRepository.class);
         applicationContext.getBean(FornecedorRepository.class);
         applicationContext.getBean(FormaPagamentoRepository.class);
-        applicationContext.getBean(DespesaRepository.class);
+        applicationContext.getBean(DespesaService.class);
+        this.applicationContext = applicationContext;
 
         this.initComponents();
 
+        this.mainPane.setTop(this.gridPesquisa);
         this.mainPane.setCenter(this.tabela);
-        this.mainPane.setBottom(new HBox(5, this.total));
+        this.mainPane.setBottom(this.total);
 
-        Scene scene = new Scene(new BorderPane(this.tabela));
+        Scene scene = new Scene(this.mainPane);
         setScene(scene);
         show();
     }
 
     public void initComponents(){
+        //FILTROS
+        this.listTipoDespesa = FXCollections.observableList(tipoDespesaRepository.findAll());
+        this.filtroTipoDespesa = new ComboBox<TipoDespesa>(listTipoDespesa);
+        this.filtroTipoDespesa.setPromptText("Tipo Despesa");
+        this.filtroTipoDespesa.setOnAction(evt -> pesquisa());
+
+        this.listaFornecedor = FXCollections.observableList(fornecedorRepository.findAll());
+        this.filtroFornecedor = new ComboBox<Fornecedor>(listaFornecedor);
+        new AutoCompleteComboBoxListener(this.filtroFornecedor);
+        this.filtroFornecedor.setMaxWidth(400);
+        this.filtroFornecedor.setOnAction(evt-> pesquisa());
+
+        this.listaFormaPagamento = FXCollections.observableList(formaPagamentoRepository.findAll());
+        this.filtroFormaPagamento = new ComboBox<FormaPagamento>(listaFormaPagamento);
+        this.filtroFormaPagamento.setPromptText("Forma Pagamento");
+        this.filtroFormaPagamento.setOnAction(evt -> pesquisa());
+
+        this.datePickerInicio.setPromptText("inicio");
+        this.datePickerInicio.setPrefWidth(120);
+        this.datePickerInicio.setOnAction(evt -> pesquisa());
+
+        this.datePickerFim.setPromptText("término");
+        this.datePickerFim.setPrefWidth(120);
+        this.datePickerFim.setOnAction(evt -> pesquisa());
+
+        this.gridPesquisa = new HBox(filtroTipoDespesa,
+                filtroFornecedor,
+                datePickerInicio,
+                datePickerFim,
+                filtroFormaPagamento,
+                Util.btNovo(null, (ActionEvent)-> { showAddDespesa(null); }));
+        this.gridPesquisa.setSpacing(5);
+        this.gridPesquisa.setPadding(new Insets(3));
+
+        //TABELA
+        MenuItem itemEdit = Util.itemEditar((ActionEvent)-> {/*showAddDespesa(tabela.getIdSelecionado());*/});
+        MenuItem itemNova = Util.itemNovo((ActionEvent)-> {/*showAddDespesa(null);*/});
+        MenuItem itemExcl = Util.itemExclui((ActionEvent)-> {/*tabela.delDespesa();*/});
+        this.cm.getItems().addAll(itemNova, itemEdit, itemExcl);
+        this.tabela.setContextMenu(cm);
+
         this.tabela.getColumns().addAll(
                 new ColunaInteger<Despesa>("Id","id", 60),
-                new ColunaTexto<Despesa>("Codigo","codigo", 150d, null),
                 new ColunaObjeto<Despesa>("Despesa", "tipoDespesa", 140d, "CENTER-LEFT"),
                 new ColunaObjeto<Despesa>("Fornecedor", "fornecedor", 400d, "CENTER-LEFT"),
                 new ColunaData<Despesa>("Data","data", 0d),
@@ -77,36 +136,27 @@ public class DespesaListView extends Stage {
                 new ColunaMoeda<>("Valor", "valor", 90)
         );
 
-        consultarBanco();
-        pesquisa();
+        this.pesquisa();
 
         this.tabela.getSelectionModel().select(0);
 
-        total.setStyle("-fx-font-size: 14px; -fx-text-fill: darkblue; -fx-font-weight : bold;");
-        total.setMinWidth(20);
-    }
-
-    public void consultarBanco() {
-        data = FXCollections.observableArrayList(this.despesaRepository.findAll());
-        filteredData = new FilteredList<>(data, p -> true);
+        //TOTAL
+        this.total.setStyle("-fx-font-size: 14px; -fx-font-weight : bold;");
     }
 
     public void pesquisa(){
-        valorTotal = new BigDecimal(0);
-
-        SortedList<Despesa> sortedData = new SortedList<>(
-                filteredData.filtered(
-                        /*
-                        despesa ->  (codigo!=null ? despesa.getCodigo().toLowerCase().contains(codigo.toLowerCase()) : true)
-                                && (idTipoDespesa!=null ? despesa.getTipoDespesa().getId().equals(idTipoDespesa) : true)
-                                && (idFornecedor!=null ? (despesa.getFornecedor()!=null ? despesa.getFornecedor().getId().equals(idFornecedor) : false ) : true)
-                                && (idFormaPagamento!=null ? despesa.getFormaPagamento().getId().equals(idFormaPagamento) : true)
-                                && Util.dataEntrePeriodo(despesa.getData(), inicio, fim)
-
-                         */
-                        despesa ->  true
+        data = FXCollections.observableArrayList(
+                this.despesaService.listaDespesas(
+                        this.filtroTipoDespesa.getValue(),
+                        this.filtroFornecedor.getValue(),
+                        Util.localDatetoDate(this.datePickerInicio.getValue()),
+                        Util.localDatetoDate(this.datePickerFim.getValue()),
+                        this.filtroFormaPagamento.getValue()
                 )
         );
+        valorTotal = new BigDecimal(0);
+
+        SortedList<Despesa> sortedData = new SortedList<>(data);
 
         sortedData.forEach(conta ->{
             valorTotal = valorTotal.add(conta.getValor());
@@ -117,11 +167,14 @@ public class DespesaListView extends Stage {
         this.tabela.setItems(sortedData);
     }
 
+    public void showAddDespesa(Long id) {
+        DespesaCadastroView despesaCadastroView =  new DespesaCadastroView(this.applicationContext);
+    }
 
     public void delDespesa() {
         if (Util.confirmaExclusao("Confirma a exclusão da despesa?",this)) {
             if(this.tabela.getSelectionModel().getSelectedItem().getId()!=null) {
-                this.despesaRepository.deleteById(this.tabela.getSelectionModel().getSelectedItem().getId());
+                //this.despesaRepository.deleteById(this.tabela.getSelectionModel().getSelectedItem().getId());
                 //dao.excluir(this.tabela.getSelectionModel().getSelectedItem().getId());
                 //consultarBanco();
                 //pesquisa(null, null, null, null, null, null, new ArrayList<String>());
@@ -150,14 +203,9 @@ public class DespesaListView extends Stage {
 
 
 private TextField filtroCodigo = new TextField();
-	private ComboTipo<TipoDespesa> filtroTipoDespesa = new ComboTipo<TipoDespesa>(new TipoDespesaDao(), new TipoDespesa());
-	private CampoFornecedor filtroFornecedor = new CampoFornecedor();
-	private ComboTipo<FormaPagamento> filtroFormaPagamento = new ComboTipo<FormaPagamento>(new FormaPagamentoDao(), new FormaPagamento());
-	private DatePicker datePickerInicio = new DatePicker();
-	private DatePicker datePickerFim = new DatePicker();
 	// tabela
 	private TabelaDespesa tabela;
-	private ContextMenu cm = new ContextMenu();
+
 	//tipo consulta
 	private ToggleGroup radioGroupTipoConsulta = new ToggleGroup();
 	private RadioButton radioDespesa = new RadioButton("Despesa");
@@ -166,42 +214,11 @@ private TextField filtroCodigo = new TextField();
 	private RadioButton radioMeses = new RadioButton("Mês");
 	private TableView<LinhaResultado> tabelaResultado = new TableView<LinhaResultado>();
 
-	public ListDespesa() {
-		setTitle("Despesa");
-		IconFontFX.register(FontAwesome.getIconFont());
-		init();
-	}
 
 	public void init() {
-		datePickerInicio.setPrefWidth(120);
-		datePickerInicio.setOnAction(evt -> pesquisaFiltro());
-
-		datePickerFim.setPrefWidth(120);
-		datePickerFim.setOnAction(evt -> pesquisaFiltro());
-
-		filtroCodigo.setPromptText("codigo");
-		filtroTipoDespesa.setPromptText("tipo despesa");
-		datePickerInicio.setPromptText("inicio");
-		datePickerFim.setPromptText("término");
-		filtroFormaPagamento.setPromptText("forma pagamento");
-
-		GridDefault gridPesquisa = new GridDefault(8,8,5);
-		gridPesquisa.addLinha("Código: ", filtroCodigo, 0, 0, 3);
-		gridPesquisa.addLinha("Despesa: ", filtroTipoDespesa, 0, 1, 3);
-		gridPesquisa.addLinha("Fornecedor: ", filtroFornecedor, 0, 2, 5);
-		gridPesquisa.addLinha("Pagamento: ", filtroFormaPagamento, 0, 3, 3);
-		gridPesquisa.addLinha("Periodo: ", datePickerInicio, 0, 4, 1);
-		gridPesquisa.addLinha("até: ", datePickerFim, 2, 4, 1);
-		gridPesquisa.add(Util.btConsultar(null, (ActionEvent)-> {pesquisaFiltro(); carregaResultado();}), 4, 4);
-		gridPesquisa.add(Util.btNovo(null, (ActionEvent)-> {showAddDespesa(null);}), 5, 4);
 
 
 		tabela = new TabelaDespesa(this);
-		MenuItem itemEdit = Util.itemEditar((ActionEvent)-> {showAddDespesa(tabela.getIdSelecionado());});
-		MenuItem itemNova = Util.itemNovo((ActionEvent)-> {showAddDespesa(null);});
-		MenuItem itemExcl = Util.itemExclui((ActionEvent)-> {tabela.delDespesa();});
-		cm.getItems().addAll(itemNova, itemEdit, itemExcl);
-		tabela.setContextMenu(cm);
 		tabela.setOnMousePressed(mouseEvent ->{
 			if(mouseEvent.isPrimaryButtonDown() && mouseEvent.getClickCount()==2)
 				showAddDespesa(tabela.getIdSelecionado());
@@ -268,10 +285,7 @@ private TextField filtroCodigo = new TextField();
 		Platform.runLater(() -> tabela.requestFocus());
 	}
 
-	public void showAddDespesa(Long id) {
-		new FormDespesa(id, this);
-		pesquisaFiltro();
-	}
+
 
 	public void carregaResultado() {
 		tabelaResultado.getItems().clear();

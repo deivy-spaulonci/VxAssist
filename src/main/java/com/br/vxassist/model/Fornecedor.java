@@ -190,7 +190,7 @@ public class Fornecedor implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || obj instanceof String) {
             return false;
         }
         final Fornecedor other = (Fornecedor) obj;

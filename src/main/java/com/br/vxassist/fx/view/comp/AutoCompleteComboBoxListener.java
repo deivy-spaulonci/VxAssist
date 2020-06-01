@@ -1,4 +1,4 @@
-package application.view.generic;
+package com.br.vxassist.fx.view.comp;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,13 +22,13 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 
         this.comboBox.setEditable(true);
         this.comboBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
             @Override
             public void handle(KeyEvent t) {
                 comboBox.hide();
             }
         });
         this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
+
     }
 
     @Override
@@ -87,6 +87,4 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
         }
         moveCaretToPos = false;
     }
-
-
 }
