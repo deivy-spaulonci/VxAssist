@@ -139,8 +139,6 @@ public class DespesaListView extends Stage {
         this.pesquisa();
 
         this.tabela.getSelectionModel().select(0);
-
-        //TOTAL
         this.total.setStyle("-fx-font-size: 14px; -fx-font-weight : bold;");
     }
 

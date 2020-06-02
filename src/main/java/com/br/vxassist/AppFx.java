@@ -49,8 +49,8 @@ public class AppFx extends Application {
 
         IconFontFX.register(FontAwesome.getIconFont());
 
-        borderPane.setPrefWidth(1080);
-        borderPane.setPrefHeight(720);
+        borderPane.setPrefWidth(800);
+        borderPane.setPrefHeight(600);
 
         borderPane.setTop(createToolBarTitle());
         borderPane.setLeft(createToolBarMenu());

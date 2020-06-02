@@ -93,7 +93,7 @@ public class AutoCompleteBox implements EventHandler{
         for (Object datum : this.data) {
             String s = this.comboBox.getEditor().getText().toLowerCase();
             if (datum.toString().toLowerCase().contains(s.toLowerCase())) {
-                list.add(datum.toString());
+                list.add(datum);
             }
         }
 
