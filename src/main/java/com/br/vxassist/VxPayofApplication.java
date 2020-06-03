@@ -1,6 +1,5 @@
 package com.br.vxassist;
 
-import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,11 +19,7 @@ public class VxPayofApplication {
 
 
     public static void main(String[] args) {
-        //CORRE O SPRING NOMAL
-        //SpringApplication.run(VxPayofApplication.class, args);
-
-        //CORRE MODO FX
-        Application.launch(AppFx.class, args);
+        SpringApplication.run(VxPayofApplication.class, args);
     }
 
     @Bean

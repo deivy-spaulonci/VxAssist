@@ -143,14 +143,5 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.6.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.security:spring-security-test:5.3.0.M1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.3.0.M1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:linux:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jiconfont:jiconfont-javafx:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jiconfont:jiconfont:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jiconfont:jiconfont-font_awesome:4.7.0.1" level="project" />
   </component>
 </module>
