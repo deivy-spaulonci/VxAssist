@@ -4,10 +4,17 @@ import com.br.vxassist.model.Despesa;
 import com.br.vxassist.repository.DespesaRepository;
 import com.br.vxassist.service.DespesaService;
 import com.br.vxassist.service.DespesaServiceImpl;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -39,9 +46,14 @@ public class DespesaController implements Serializable {
         this.despesaServiceImpl = despesaServiceImpl;
     }
 
+    @PostMapping("/")
+    public ResponseEntity<Despesa> saveDespesa(@Valid @RequestBody Despesa despesa){
+        this.despesaServiceImpl.save(despesa);
+        return new ResponseEntity<>(despesa, HttpStatus.CREATED);
+    }
+
     @GetMapping("/all")
-    public Page<Despesa> get(@ModelAttribute Despesa despesa, Pageable pageable){
-        System.out.println(despesa.getFormaPagamento().getNome());
+    public Page<Despesa> get(@QuerydslPredicate(root = Despesa.class) Predicate despesa, Pageable pageable){
         return despesaServiceImpl.getAll(despesa, pageable);
     }
 }
