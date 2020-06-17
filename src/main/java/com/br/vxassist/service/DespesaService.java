@@ -9,4 +9,7 @@ public interface DespesaService {
     public abstract Page<Despesa> getAll(Predicate predicate, Pageable pageable);
 
     public abstract Despesa save(Despesa despesa);
+
+    public abstract Long count();
+
  }

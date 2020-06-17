@@ -1,8 +1,9 @@
-package com.br.vxassist.service;
+package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.QDespesa;
 import com.br.vxassist.repository.DespesaRepository;
+import com.br.vxassist.service.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,7 +20,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
-public class DespesaServiceImpl implements DespesaService{
+public class DespesaServiceImpl implements DespesaService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -51,4 +52,8 @@ public class DespesaServiceImpl implements DespesaService{
         return despesaRepository.save(despesa);
     }
 
+    @Override
+    public Long count() {
+        return despesaRepository.count();
+    }
 }
