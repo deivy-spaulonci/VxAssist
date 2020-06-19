@@ -21,8 +21,8 @@ public class LancamentoContaCartaoServiceImpl implements LancamentoContaCartaoSe
     private LancamentoContaCartaoRepository lancamentoContaCartaoRepository;
 
     @Override
-    public List<LancamentoContaCartao> getAll(Pageable pageable) {
-        return lancamentoContaCartaoRepository.findAll(pageable).getContent();
+    public List<LancamentoContaCartao> getAll() {
+        return lancamentoContaCartaoRepository.findAll();
     }
 }
 

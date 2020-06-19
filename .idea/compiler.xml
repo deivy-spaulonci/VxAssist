@@ -10,7 +10,7 @@
         <module name="vx-payof" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8">
+    <bytecodeTargetLevel target="14">
       <module name="vx-payof" target="1.8" />
     </bytecodeTargetLevel>
   </component>

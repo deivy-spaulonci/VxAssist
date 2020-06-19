@@ -24,9 +24,9 @@ public class TipoDespesaController implements Serializable {
         this.tipoDespesaServiceImpl = tipoDespesaServiceImpl;
     }
 
-    @GetMapping("/all")
-    public List<TipoDespesa> get(Pageable pageable){
-        return tipoDespesaServiceImpl.getAll(pageable);
+    @GetMapping("/allSelect")
+    public List<TipoDespesa> getSelect(Pageable pageable){
+        return tipoDespesaServiceImpl.getAllSelect();
     }
 
 }

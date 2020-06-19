@@ -5,6 +5,7 @@ import com.br.vxassist.repository.TipoContaRepository;
 import com.br.vxassist.service.TipoContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -21,8 +22,8 @@ public class TipoContaServiceImpl implements TipoContaService {
     private TipoContaRepository tipoContaRepository;
 
     @Override
-    public List<TipoConta> getAll(Pageable pageable) {
-        return tipoContaRepository.findAll(pageable).getContent();
+    public List<TipoConta> getAllSelect() {
+        return tipoContaRepository.findAll(Sort.by("nome").ascending());
     }
 
 }

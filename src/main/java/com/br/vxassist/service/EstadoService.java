@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface EstadoService {
-    public abstract List<Estado> getAll(Pageable pageable);
+    public abstract List<Estado> getAll();
 }

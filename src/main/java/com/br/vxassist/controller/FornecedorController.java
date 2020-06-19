@@ -33,8 +33,8 @@ public class FornecedorController implements Serializable {
         return fornecedorServiceImpl.getAll(fornecedor, pageable);
     }
 
-    @GetMapping("/allselect")
-    public List<Fornecedor> getAllSelect(Predicate fornecedor, Pageable pageable){
+    @GetMapping("/allSelect")
+    public List<Fornecedor> getSelect(Predicate fornecedor, Pageable pageable){
         return fornecedorServiceImpl.getAll(fornecedor, pageable).getContent();
     }
 

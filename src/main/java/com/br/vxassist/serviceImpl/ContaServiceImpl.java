@@ -1,5 +1,6 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.filter.ContaFilter;
 import com.br.vxassist.model.Conta;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.repository.ContaRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.math.BigDecimal;
 
 @Service
 public class ContaServiceImpl implements ContaService {
@@ -30,6 +32,21 @@ public class ContaServiceImpl implements ContaService {
     @Override
     public Conta save(Conta conta){
         return contaRepository.save(conta);
+    }
+
+    @Override
+    public Long count() {
+        return contaRepository.count();
+    }
+
+    @Override
+    public BigDecimal total() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal total(ContaFilter contaFilter) {
+        return null;
     }
 
 

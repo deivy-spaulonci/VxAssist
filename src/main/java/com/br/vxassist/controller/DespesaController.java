@@ -1,5 +1,6 @@
 package com.br.vxassist.controller;
 
+import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
 import com.querydsl.core.types.Predicate;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/despesa")
@@ -47,9 +49,15 @@ public class DespesaController implements Serializable {
         return despesaServiceImpl.getAll(despesa, pageable);
     }
 
-    @GetMapping("/total")
-    public Long get(){
+    @GetMapping("/totalRegistros")
+    public Long getTotalRegistros(){
         return despesaServiceImpl.count();
     }
+
+    @GetMapping("/total")
+    public BigDecimal getTotal(@ModelAttribute DespesaFilter despesaFilter){
+        return despesaServiceImpl.total(despesaFilter);
+    }
+
 
 }

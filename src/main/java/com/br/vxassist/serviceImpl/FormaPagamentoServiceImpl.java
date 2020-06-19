@@ -6,6 +6,7 @@ import com.br.vxassist.repository.FormaPagamentoRepository;
 import com.br.vxassist.service.FormaPagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -22,7 +23,7 @@ public class FormaPagamentoServiceImpl implements FormaPagamentoService {
     private FormaPagamentoRepository formaPagamentoRepository;
 
     @Override
-    public List<FormaPagamento> getAll(Pageable pageable) {
-        return formaPagamentoRepository.findAll(pageable).getContent();
+    public List<FormaPagamento> getAllSelect() {
+        return formaPagamentoRepository.findAll(Sort.by("nome").ascending());
     }
 }

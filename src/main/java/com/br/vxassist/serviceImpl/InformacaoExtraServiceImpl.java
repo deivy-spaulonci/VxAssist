@@ -5,6 +5,7 @@ import com.br.vxassist.repository.InformacaoExtraRepository;
 import com.br.vxassist.service.InformacaoExtraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -18,11 +19,6 @@ public class InformacaoExtraServiceImpl implements InformacaoExtraService {
 
     @Autowired
     private InformacaoExtraRepository informacaoExtraRepository;
-
-    @Override
-    public List<InformacaoExtra> getAll(Pageable pageable) {
-        return informacaoExtraRepository.findAll(pageable).getContent();
-    }
 
     @Override
     public InformacaoExtra save(InformacaoExtra informacaoExtra){

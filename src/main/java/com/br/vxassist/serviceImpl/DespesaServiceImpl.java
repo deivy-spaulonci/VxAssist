@@ -1,23 +1,21 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.QDespesa;
 import com.br.vxassist.repository.DespesaRepository;
 import com.br.vxassist.service.DespesaService;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.stereotype.Service;
-import com.querydsl.core.types.Predicate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
-import javax.persistence.criteria.Root;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 @Service
 public class DespesaServiceImpl implements DespesaService {
@@ -55,5 +53,41 @@ public class DespesaServiceImpl implements DespesaService {
     @Override
     public Long count() {
         return despesaRepository.count();
+    }
+//
+//    @Override
+//    public BigDecimal total() {
+//        JPAQuery<Despesa> query = new JPAQuery<Despesa>(this.entityManager);
+//        QDespesa qDespesa = QDespesa.despesa;
+//        return query.select(qDespesa.valor.sum()).from(qDespesa).fetch().get(0);
+//    }
+
+    @Override
+    public BigDecimal total(DespesaFilter despesaFilter) {
+        JPAQuery<BigDecimal> query = new JPAQuery<>(this.entityManager);
+        QDespesa qDespesa = QDespesa.despesa;
+
+        query.select(qDespesa.valor.sum()).from(qDespesa);
+
+        if(Objects.nonNull(despesaFilter.getId())){
+            query.where(qDespesa.id.like(despesaFilter.getId().toString()));
+        }
+        if(Objects.nonNull(despesaFilter.getTipoDespesa())){
+            query.where(qDespesa.tipoDespesa.id.eq(despesaFilter.getTipoDespesa().getId()));
+        }
+        if(Objects.nonNull(despesaFilter.getFornecedor())){
+            query.where(qDespesa.fornecedor.id.eq(despesaFilter.getFornecedor().getId()));
+        }
+        if(Objects.nonNull(despesaFilter.getDataInicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
+            query.where(qDespesa.data.between(despesaFilter.getDataInicio(), despesaFilter.getDataFinal()));
+        }else if(Objects.nonNull(despesaFilter.getDataInicio()) && Objects.isNull(despesaFilter.getDataFinal())){
+            query.where(qDespesa.data.eq(despesaFilter.getDataInicio()).and(qDespesa.data.after(despesaFilter.getDataInicio())));
+        }else if(Objects.isNull(despesaFilter.getDataInicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
+            query.where(qDespesa.data.eq(despesaFilter.getDataFinal()).and(qDespesa.data.before(despesaFilter.getDataFinal())));
+        }
+        if(Objects.nonNull(despesaFilter.getFormaPagamento())){
+            query.where(qDespesa.formaPagamento.id.eq(despesaFilter.getFormaPagamento().getId()));
+        }
+        return query.fetch().get(0);
     }
 }

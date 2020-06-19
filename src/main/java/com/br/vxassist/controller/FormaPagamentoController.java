@@ -25,9 +25,9 @@ public class FormaPagamentoController implements Serializable {
         this.formaPagamentoServiceImpl = formaPagamentoServiceImpl;
     }
 
-    @GetMapping("/all")
-    public List<FormaPagamento> get(Pageable pageable){
-        return formaPagamentoServiceImpl.getAll(pageable);
+    @GetMapping("/allSelect")
+    public List<FormaPagamento> getSelect(){
+        return formaPagamentoServiceImpl.getAllSelect();
     }
 
 }

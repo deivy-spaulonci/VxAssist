@@ -5,6 +5,7 @@ import com.br.vxassist.repository.TipoInformacaoExtraRepository;
 import com.br.vxassist.service.TipoInformacaoExtraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -21,8 +22,8 @@ public class TipoInformacaoExtraServiceImpl implements TipoInformacaoExtraServic
     private TipoInformacaoExtraRepository tipoInformacaoExtraRepository;
 
     @Override
-    public List<TipoInformacaoExtra> getAll(Pageable pageable) {
-        return tipoInformacaoExtraRepository.findAll(pageable).getContent();
+    public List<TipoInformacaoExtra> getAllSelect() {
+        return tipoInformacaoExtraRepository.findAll(Sort.by("nome").ascending());
     }
 
 }

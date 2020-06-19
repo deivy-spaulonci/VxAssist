@@ -5,6 +5,7 @@ import com.br.vxassist.repository.TipoDespesaRepository;
 import com.br.vxassist.service.TipoDespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class TipoDespesaServiceImpl implements TipoDespesaService {
     private TipoDespesaRepository tipoDespesaRepository;
 
     @Override
-    public List<TipoDespesa> getAll(Pageable pageable) {
-        return tipoDespesaRepository.findAll(pageable).getContent();
+    public List<TipoDespesa> getAllSelect() {
+        return tipoDespesaRepository.findAll(Sort.by("nome").ascending());
     }
 }
