@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.br</groupId>
-	<artifactId>vx-payof</artifactId>
+	<artifactId>vx-assist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>vx-payof</name>
+	<name>vx-assist</name>
 	<description>Projeto de Assitente Financeiro</description>
 
 	<properties>

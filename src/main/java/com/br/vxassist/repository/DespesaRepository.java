@@ -26,15 +26,15 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long>,
         bindings.bind(root.fornecedor.id).first(NumberExpression::eq);
         bindings.bind(root.formaPagamento.id).first(NumberExpression::eq);
         bindings.bind(root.data).all((path, value) -> {
-                    List<? extends Date> dates = new ArrayList<>(value);
-                    if (dates.size() == 1) {
-                        return Optional.of(path.eq(dates.get(0)));
-                    } else {
-                        Date from = dates.get(0);
-                        Date to = dates.get(1);
-                        return Optional.of(path.between(from, to));
-                    }
-                });
+            List<? extends Date> dates = new ArrayList<>(value);
+            if (dates.size() == 1) {
+                return Optional.of(path.eq(dates.get(0)));
+            } else {
+                Date from = dates.get(0);
+                Date to = dates.get(1);
+                return Optional.of(path.between(from, to));
+            }
+        });
 
     }
 
