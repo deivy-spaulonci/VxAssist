@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -78,13 +79,14 @@ public class DespesaServiceImpl implements DespesaService {
         if(Objects.nonNull(despesaFilter.getFornecedor())){
             query.where(qDespesa.fornecedor.id.eq(despesaFilter.getFornecedor().getId()));
         }
-        if(Objects.nonNull(despesaFilter.getDataInicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
-            query.where(qDespesa.data.between(despesaFilter.getDataInicio(), despesaFilter.getDataFinal()));
-        }else if(Objects.nonNull(despesaFilter.getDataInicio()) && Objects.isNull(despesaFilter.getDataFinal())){
-            query.where(qDespesa.data.eq(despesaFilter.getDataInicio()).and(qDespesa.data.after(despesaFilter.getDataInicio())));
-        }else if(Objects.isNull(despesaFilter.getDataInicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
-            query.where(qDespesa.data.eq(despesaFilter.getDataFinal()).and(qDespesa.data.before(despesaFilter.getDataFinal())));
-        }
+        despesaFilter.
+//        if(Objects.nonNull(despesaFilter.getData().Inicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
+//            query.where(qDespesa.data.between(despesaFilter.getDataInicio(), despesaFilter.getDataFinal()));
+//        }else if(Objects.nonNull(despesaFilter.getDataInicio()) && Objects.isNull(despesaFilter.getDataFinal())){
+//            query.where(qDespesa.data.eq(despesaFilter.getDataInicio()).and(qDespesa.data.after(despesaFilter.getDataInicio())));
+//        }else if(Objects.isNull(despesaFilter.getDataInicio()) && Objects.nonNull(despesaFilter.getDataFinal())){
+//            query.where(qDespesa.data.eq(despesaFilter.getDataFinal()).and(qDespesa.data.before(despesaFilter.getDataFinal())));
+//        }
         if(Objects.nonNull(despesaFilter.getFormaPagamento())){
             query.where(qDespesa.formaPagamento.id.eq(despesaFilter.getFormaPagamento().getId()));
         }
