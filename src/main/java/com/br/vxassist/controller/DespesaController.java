@@ -45,8 +45,9 @@ public class DespesaController implements Serializable {
     }
 
     @GetMapping("/all")
-    public Page<Despesa> get(@QuerydslPredicate(root = Despesa.class) Predicate despesa, Pageable pageable){
-        return despesaServiceImpl.getAll(despesa, pageable);
+    public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter,
+                             Pageable pageable){
+        return despesaServiceImpl.getAll(despesaFilter, pageable);
     }
 
     @GetMapping("/totalRegistros")
@@ -58,6 +59,4 @@ public class DespesaController implements Serializable {
     public BigDecimal getTotal(@ModelAttribute DespesaFilter despesaFilter){
         return despesaServiceImpl.total(despesaFilter);
     }
-
-
 }

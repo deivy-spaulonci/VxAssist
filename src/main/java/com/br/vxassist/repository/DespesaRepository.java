@@ -13,6 +13,7 @@ import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 //@RepositoryRestResource(excerptProjection = DespesaProjection.class, path = "despesa")

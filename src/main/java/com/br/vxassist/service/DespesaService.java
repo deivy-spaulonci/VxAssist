@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 
 public interface DespesaService {
-    public abstract Page<Despesa> getAll(Predicate predicate, Pageable pageable);
+    public abstract Page<Despesa> getAll(DespesaFilter despesaFitler, Pageable pageable);
 
     public abstract Despesa save(Despesa despesa);
 

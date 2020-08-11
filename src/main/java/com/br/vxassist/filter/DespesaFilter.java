@@ -7,25 +7,32 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-
 public class DespesaFilter implements Serializable {
     @JsonProperty("id")
     public Long id;
+
     @JsonProperty("tipoDespesa")
     public TipoDespesa tipoDespesa;
+
     @JsonProperty("fornecedor")
     public Fornecedor fornecedor;
-    @JsonProperty("data")
+
+    @JsonProperty("dataInicial")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public Set<Date> data;
-//    @JsonProperty("dataFinal")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//    public Date dataFinal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date dataInicial;
+
+    @JsonProperty("dataFinal")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date dataFinal;
+
     @JsonProperty("formaPagamento")
     public FormaPagamento formaPagamento;
 
@@ -33,14 +40,15 @@ public class DespesaFilter implements Serializable {
     public DespesaFilter(Long id,
                          TipoDespesa tipoDespesa,
                          Fornecedor fornecedor,
-                         Set<Date> data,
-                         FormaPagamento formaPagamento){
+                         Date dataInicial,
+                         Date dataFinal,
+                         FormaPagamento formaPagamento) {
         super();
         this.id = id;
         this.tipoDespesa = tipoDespesa;
         this.fornecedor = fornecedor;
-        this.data = data;
-//        this.dataFinal = dataFinal;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
         this.formaPagamento = formaPagamento;
     }
 
@@ -69,21 +77,21 @@ public class DespesaFilter implements Serializable {
         this.fornecedor = fornecedor;
     }
 
-////    public Date getDataInicio() {
-////        return dataInicio;
-////    }
-////
-////    public void setDataInicio(Date dataInicio) {
-////        this.dataInicio = dataInicio;
-////    }
-//
-//    public Date getDataFinal() {
-//        return dataFinal;
-//    }
-//
-//    public void setDataFinal(Date dataFinal) {
-//        this.dataFinal = dataFinal;
-//    }
+    public Date getDataInicial() {
+        return dataInicial;
+    }
+
+    public void setDataInicial(Date dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
 
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
@@ -93,12 +101,5 @@ public class DespesaFilter implements Serializable {
         this.formaPagamento = formaPagamento;
     }
 
-    public Set<Date> getData() {
-        return data;
-    }
-
-    public void setData(Set<Date> data) {
-        this.data = data;
-    }
 }
 
