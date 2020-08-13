@@ -51,13 +51,14 @@ public class DespesaServiceImpl implements DespesaService {
         if(Objects.nonNull(despesaFilter.getDataInicial()) && Objects.nonNull(despesaFilter.getDataFinal())){
             where.and(qDespesa.data.between(despesaFilter.getDataInicial(), despesaFilter.getDataFinal()));
         }else if(Objects.nonNull(despesaFilter.getDataInicial()) && Objects.isNull(despesaFilter.getDataFinal())){
-            where.and(qDespesa.data.eq(despesaFilter.getDataInicial()).and(qDespesa.data.after(despesaFilter.getDataInicial())));
+            where.and(qDespesa.data.goe(despesaFilter.getDataInicial()));
         }else if(Objects.isNull(despesaFilter.getDataInicial()) && Objects.nonNull(despesaFilter.getDataFinal())){
-            where.and(qDespesa.data.eq(despesaFilter.getDataFinal()).and(qDespesa.data.before(despesaFilter.getDataFinal())));
+            where.and(qDespesa.data.loe(despesaFilter.getDataFinal()));
         }
         if(Objects.nonNull(despesaFilter.getFormaPagamento())){
             where.and(qDespesa.formaPagamento.id.eq(despesaFilter.getFormaPagamento().getId()));
         }
+
         return despesaRepository.findAll(where, pageable);
     }
 

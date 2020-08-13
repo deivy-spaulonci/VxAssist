@@ -8,9 +8,11 @@ import com.querydsl.core.types.dsl.NumberExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -19,28 +21,15 @@ import java.util.*;
 //@RepositoryRestResource(excerptProjection = DespesaProjection.class, path = "despesa")
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa, Long>,
-        QuerydslPredicateExecutor<Despesa>,
-        QuerydslBinderCustomizer<QDespesa> {
+        QuerydslPredicateExecutor<Despesa> {
 
-    @Override
-    default public void customize(QuerydslBindings bindings, QDespesa root) {
+//    @Query("SELECT d FROM Despesa d WHERE c.movie = :movie")
+//    List<Despesa> findByMovieCustom(@Param("movie") String movieName, Pageable pageable);
 
-        bindings.bind(root.id).first(NumberExpression::eq);
-        bindings.bind(root.tipoDespesa.id).first(NumberExpression::eq);
-        bindings.bind(root.fornecedor.id).first(NumberExpression::eq);
-        bindings.bind(root.formaPagamento.id).first(NumberExpression::eq);
-
-        bindings.bind(root.data).all((path, value) -> {
-            List<? extends Date> dates = new ArrayList<>(value);
-
-            if(dates.size() == 1){
-                return Optional.of(path.eq(dates.get(0)));
-            } else {
-                Date from = dates.get(0);
-                Date to = dates.get(1);
-                return Optional.of(path.between(from, to));
-            }
-        });
-    }
-
+//    @Query("FROM Customer c " +
+//            "WHERE LOWER(c.name) like %:searchTerm% " +
+//            "OR LOWER(c.email) like %:searchTerm%")
+//    Page<Customer> search(
+//            @Param("searchTerm") String searchTerm,
+//            Pageable pageable);
 }

@@ -6,6 +6,8 @@ import com.br.vxassist.serviceImpl.DespesaServiceImpl;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -47,7 +49,14 @@ public class DespesaController implements Serializable {
     @GetMapping("/all")
     public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter,
                              Pageable pageable){
-        return despesaServiceImpl.getAll(despesaFilter, pageable);
+        Page<Despesa> resultPage = despesaServiceImpl.getAll(despesaFilter, pageable);
+
+//        if(resultPage.getTotalPages() <= pageable.getPageSize()){
+//            Pageable pageable1 = PageRequest.of(0, 0);
+//            Page<Despesa> page = new PageImpl<Despesa>(resultPage.getContent(), pageable1, 0);
+//            return page;
+//        }
+        return resultPage;
     }
 
     @GetMapping("/totalRegistros")
