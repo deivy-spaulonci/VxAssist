@@ -54,7 +54,7 @@ public class Despesa implements Serializable {
     @JoinColumn(name = "FORMA_PAGAMENTO_ID")
     private FormaPagamento formaPagamento;
 
-    @NotEmpty(message = "{notempty.despesa.valor}")
+    @NotNull(message = "{notnull.despesa.valor}")
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 

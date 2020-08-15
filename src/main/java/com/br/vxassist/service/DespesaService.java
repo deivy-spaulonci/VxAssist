@@ -16,4 +16,9 @@ public interface DespesaService {
     public abstract Long count();
 
     public abstract BigDecimal total(DespesaFilter despesaFilter);
+
+    public abstract Despesa findDespesaById(Long id);
+
+    public abstract void excluirDespesa(Long id);
+
  }

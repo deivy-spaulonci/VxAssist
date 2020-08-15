@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.exception.IdNotFound;
+import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.QDespesa;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -101,4 +105,15 @@ public class DespesaServiceImpl implements DespesaService {
         }
         return query.fetch().get(0);
     }
+
+    @Override
+    public Despesa findDespesaById(Long id) {
+        return this.despesaRepository.findById(id).orElseThrow(IdNotFound::new);
+    }
+
+    @Override
+    public void excluirDespesa(Long id) {
+        this.despesaRepository.deleteById(id);
+    }
+
 }

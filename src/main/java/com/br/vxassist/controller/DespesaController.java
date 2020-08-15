@@ -1,5 +1,6 @@
 package com.br.vxassist.controller;
 
+import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
@@ -40,7 +41,7 @@ public class DespesaController implements Serializable {
         this.despesaServiceImpl = despesaServiceImpl;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Despesa> save(@Valid @RequestBody Despesa despesa){
         this.despesaServiceImpl.save(despesa);
         return new ResponseEntity<>(despesa, HttpStatus.CREATED);
@@ -50,12 +51,6 @@ public class DespesaController implements Serializable {
     public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter,
                              Pageable pageable){
         Page<Despesa> resultPage = despesaServiceImpl.getAll(despesaFilter, pageable);
-
-//        if(resultPage.getTotalPages() <= pageable.getPageSize()){
-//            Pageable pageable1 = PageRequest.of(0, 0);
-//            Page<Despesa> page = new PageImpl<Despesa>(resultPage.getContent(), pageable1, 0);
-//            return page;
-//        }
         return resultPage;
     }
 
@@ -67,5 +62,11 @@ public class DespesaController implements Serializable {
     @GetMapping("/total")
     public BigDecimal getTotal(@ModelAttribute DespesaFilter despesaFilter){
         return despesaServiceImpl.total(despesaFilter);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        this.despesaServiceImpl.findDespesaById(id);
+        this.despesaServiceImpl.excluirDespesa(id);
     }
 }
