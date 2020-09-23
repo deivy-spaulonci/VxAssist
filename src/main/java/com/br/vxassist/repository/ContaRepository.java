@@ -15,9 +15,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Long>,
-        QuerydslPredicateExecutor<Conta>, QuerydslBinderCustomizer<QConta> {
+        QuerydslPredicateExecutor<Conta>{
 
-    @Override
-    default public void customize(QuerydslBindings bindings, QConta root) {
-    }
 }

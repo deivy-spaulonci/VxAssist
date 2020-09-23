@@ -38,7 +38,7 @@ public class DespesaFilter implements Serializable {
 
     @QueryProjection
     public DespesaFilter(Long id,
-                         TipoDespesa tipoDespesa,
+                         TipoDespesa tipoDespesa,       
                          Fornecedor fornecedor,
                          Date dataInicial,
                          Date dataFinal,

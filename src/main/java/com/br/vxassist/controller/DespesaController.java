@@ -1,21 +1,14 @@
 package com.br.vxassist.controller;
 
-import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -62,6 +55,11 @@ public class DespesaController implements Serializable {
     @GetMapping("/total")
     public BigDecimal getTotal(@ModelAttribute DespesaFilter despesaFilter){
         return despesaServiceImpl.total(despesaFilter);
+    }
+
+    @GetMapping("/{id}")
+    public Despesa findById(@PathVariable Long id){
+        return this.despesaServiceImpl.findDespesaById(id);
     }
 
     @DeleteMapping("/{id}")

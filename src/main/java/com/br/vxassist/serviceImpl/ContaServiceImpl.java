@@ -1,11 +1,15 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.ContaFilter;
 import com.br.vxassist.model.Conta;
 import com.br.vxassist.model.Despesa;
+import com.br.vxassist.model.QConta;
 import com.br.vxassist.repository.ContaRepository;
 import com.br.vxassist.service.ContaService;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Service
 public class ContaServiceImpl implements ContaService {
@@ -25,8 +30,27 @@ public class ContaServiceImpl implements ContaService {
     private ContaRepository contaRepository;
 
     @Override
-    public Page<Conta> getAll(Predicate predicate, Pageable pageable) {
-        return contaRepository.findAll(predicate, pageable);
+    public Page<Conta> getAll(ContaFilter contaFilter, Pageable pageable) {
+        QConta qConta = QConta.conta;
+
+        BooleanBuilder where = new BooleanBuilder();
+        if(Objects.nonNull(contaFilter.id)){
+            where.and(qConta.id.eq(contaFilter.id));
+        }
+        if(Objects.nonNull(contaFilter.codigoBarra)){
+            where.and(qConta.codigoBarra.likeIgnoreCase(contaFilter.codigoBarra));
+        }
+        if(Objects.nonNull(contaFilter.tipoConta)){
+            where.and(qConta.tipoConta.eq(contaFilter.tipoConta));
+        }
+        if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.between(contaFilter.getVencimentoInicial(), contaFilter.getVencimentoFinal()));
+        }else if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.isNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.goe(contaFilter.getVencimentoInicial()));
+        }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
+        }
+        return contaRepository.findAll(where, pageable);
     }
 
     @Override
@@ -40,14 +64,39 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public BigDecimal total() {
-        return null;
+    public BigDecimal total(ContaFilter contaFilter) {
+        JPAQuery<BigDecimal> query = new JPAQuery<>(this.entityManager);
+        QConta qConta = QConta.conta;
+
+        query.select(qConta.valor.sum()).from(qConta);
+
+        if(Objects.nonNull(contaFilter.id)){
+            query.where(qConta.id.eq(contaFilter.id));
+        }
+        if(Objects.nonNull(contaFilter.codigoBarra)){
+            query.where(qConta.codigoBarra.likeIgnoreCase(contaFilter.codigoBarra));
+        }
+        if(Objects.nonNull(contaFilter.tipoConta)){
+            query.where(qConta.tipoConta.eq(contaFilter.tipoConta));
+        }
+        if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            query.where(qConta.vencimento.between(contaFilter.getVencimentoInicial(), contaFilter.getVencimentoFinal()));
+        }else if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.isNull(contaFilter.getVencimentoFinal())){
+            query.where(qConta.vencimento.goe(contaFilter.getVencimentoInicial()));
+        }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            query.where(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
+        }
+
+        return query.fetch().get(0);
     }
 
     @Override
-    public BigDecimal total(ContaFilter contaFilter) {
-        return null;
+    public Conta findContaById(Long id) {
+        return this.contaRepository.findById(id).orElseThrow(IdNotFound::new);
     }
 
-
+    @Override
+    public void excluirConta(Long id) {
+        this.contaRepository.deleteById(id);
+    }
 }
