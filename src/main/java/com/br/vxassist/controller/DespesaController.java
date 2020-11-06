@@ -41,7 +41,7 @@ public class DespesaController implements Serializable {
     }
 
     @GetMapping("/all")
-    public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter,
+    public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter, 
                              Pageable pageable){
         Page<Despesa> resultPage = despesaServiceImpl.getAll(despesaFilter, pageable);
         return resultPage;
