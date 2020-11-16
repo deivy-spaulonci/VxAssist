@@ -1,5 +1,8 @@
 package com.br.vxassist.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +24,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Audited
+@AuditTable(value="fornecedor_aud")
 @Entity
 @Table(name = "FORNECEDOR")
 public class Fornecedor implements Serializable {

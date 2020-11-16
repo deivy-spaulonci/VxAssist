@@ -1,5 +1,7 @@
 package com.br.vxassist.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
@@ -8,7 +10,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-@RestResource
+@Audited
+@AuditTable(value="tipo_despesa_aud")
 @Entity
 @Table(name = "TIPO_DESPESA")
 public class TipoDespesa implements Serializable {

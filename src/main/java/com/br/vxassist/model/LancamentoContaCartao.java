@@ -1,5 +1,8 @@
 package com.br.vxassist.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -7,6 +10,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+@Audited
+@AuditTable(value="lancamento_conta_cartao_aud")
 @Entity
 @Table(name = "LANCAMENTO_CONTA_CARTAO")
 public class LancamentoContaCartao {

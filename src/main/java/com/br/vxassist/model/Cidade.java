@@ -1,9 +1,14 @@
 package com.br.vxassist.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
+@Audited
+@AuditTable(value="cidade_aud")
 @Entity
 @Table(name = "CIDADE")
 public class Cidade implements Serializable {

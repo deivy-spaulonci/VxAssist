@@ -2,6 +2,9 @@ package com.br.vxassist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -30,6 +33,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Audited
+@AuditTable(value="conta_aud")
 @Entity
 @Table(name = "CONTA")
 public class Conta implements Serializable {
