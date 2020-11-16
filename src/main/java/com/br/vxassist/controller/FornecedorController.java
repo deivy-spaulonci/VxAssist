@@ -1,7 +1,5 @@
 package com.br.vxassist.controller;
 
-import com.br.vxassist.model.Despesa;
-import com.br.vxassist.model.FormaPagamento;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.serviceImpl.FornecedorServiceImpl;
 import com.querydsl.core.types.Predicate;

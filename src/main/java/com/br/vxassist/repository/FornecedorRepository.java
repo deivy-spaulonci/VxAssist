@@ -16,7 +16,5 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long>,
     default public void customize(QuerydslBindings bindings, QFornecedor root) {
     }
 
-
-
 }
 
