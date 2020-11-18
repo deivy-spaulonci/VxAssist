@@ -1,5 +1,8 @@
 package com.br.vxassist.controller;
 
+import com.br.vxassist.exception.NotFoundException;
+import com.br.vxassist.filter.DespesaFilter;
+import com.br.vxassist.filter.FornecedorFilter;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.serviceImpl.FornecedorServiceImpl;
 import com.querydsl.core.types.Predicate;
@@ -7,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/fornecedor")
@@ -26,14 +30,20 @@ public class FornecedorController implements Serializable {
         this.fornecedorServiceImpl = fornecedorServiceImpl;
     }
 
-    @GetMapping("/all")
-    public Page<Fornecedor> get(@QuerydslPredicate(root = Fornecedor.class) Predicate fornecedor, Pageable pageable){
-        return fornecedorServiceImpl.getAll(fornecedor, pageable);
+    @GetMapping()
+    public ResponseEntity<Page<Fornecedor>> listAll(//@QuerydslPredicate(root = Fornecedor.class) Predicate fornecedor,
+                                                    @ModelAttribute FornecedorFilter fornecedorFilter,
+                                                    Pageable pageable){
+        return new ResponseEntity<>(fornecedorServiceImpl.getAll(fornecedorFilter, pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/allSelect")
-    public List<Fornecedor> getSelect(Predicate fornecedor, Pageable pageable){
-        return fornecedorServiceImpl.getAll(fornecedor, pageable).getContent();
+    @GetMapping("/{id}")
+    public ResponseEntity<Fornecedor> findFornecedorById(@PathVariable("id") Long id){
+        try{
+            Fornecedor fornecedor = fornecedorServiceImpl.findFornecedorById(id);
+            return new ResponseEntity<>(fornecedor, HttpStatus.OK);
+        }catch (Exception ex) {
+            throw new NotFoundException("Id do Fornecedor não encontrado!");
+        }
     }
-
 }

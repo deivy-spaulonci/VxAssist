@@ -40,8 +40,14 @@ public class DespesaController implements Serializable {
         return new ResponseEntity<>(despesa, HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<Despesa> update(@Valid @RequestBody Despesa despesa){
+        this.despesaServiceImpl.save(despesa);
+        return new ResponseEntity<>(despesa, HttpStatus.GONE);
+    }
+
     @GetMapping("/all")
-    public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter, 
+    public Page<Despesa> get(@ModelAttribute DespesaFilter despesaFilter,
                              Pageable pageable){
         Page<Despesa> resultPage = despesaServiceImpl.getAll(despesaFilter, pageable);
         return resultPage;

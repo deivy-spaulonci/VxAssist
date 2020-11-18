@@ -9,16 +9,16 @@ import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 
 public interface DespesaService {
-    public abstract Page<Despesa> getAll(DespesaFilter despesaFitler, Pageable pageable);
+    abstract Page<Despesa> getAll(DespesaFilter despesaFitler, Pageable pageable);
 
-    public abstract Despesa save(Despesa despesa);
+    abstract Despesa save(Despesa despesa);
 
-    public abstract Long count();
+    abstract Long count();
 
-    public abstract BigDecimal total(DespesaFilter despesaFilter);
+    abstract BigDecimal total(DespesaFilter despesaFilter);
 
-    public abstract Despesa findDespesaById(Long id);
+    abstract Despesa findDespesaById(Long id);
 
-    public abstract void excluirDespesa(Long id);
+    abstract void excluirDespesa(Long id);
 
  }

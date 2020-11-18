@@ -1,12 +1,15 @@
 package com.br.vxassist.service;
 
+import com.br.vxassist.filter.FornecedorFilter;
 import com.br.vxassist.model.Fornecedor;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FornecedorService {
-    public abstract Page<Fornecedor> getAll(Predicate predicate, Pageable pageable);
+    abstract Page<Fornecedor> getAll(FornecedorFilter fornecedorFilter, Pageable pageable);
 
-    public abstract Fornecedor save(Fornecedor fornecedor);
+    abstract Fornecedor save(Fornecedor fornecedor);
+
+    abstract Fornecedor findFornecedorById(Long id);
 }
