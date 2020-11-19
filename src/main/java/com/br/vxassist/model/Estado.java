@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Audited
-@AuditTable(value="estado_aud")
+//@Audited
+//@AuditTable(value="estado_aud")
 @Entity
 @Table(name = "ESTADO")
 public class Estado implements Serializable {

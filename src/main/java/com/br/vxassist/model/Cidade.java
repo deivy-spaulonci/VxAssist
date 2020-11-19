@@ -7,8 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@Audited
-@AuditTable(value="cidade_aud")
+//@Audited
+//@AuditTable(value="cidade_aud")
 @Entity
 @Table(name = "CIDADE")
 public class Cidade implements Serializable {

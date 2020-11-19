@@ -33,8 +33,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Audited
-@AuditTable(value="conta_aud")
+//@Audited
+//@AuditTable(value="conta_aud")
 @Entity
 @Table(name = "CONTA")
 public class Conta implements Serializable {

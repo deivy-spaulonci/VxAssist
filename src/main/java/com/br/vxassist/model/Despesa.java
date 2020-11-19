@@ -18,8 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Audited
-@AuditTable(value="despesa_aud")
+//@Audited
+//@AuditTable(value="despesa_aud")
 @Entity
 @Table(name = "DESPESA")
 public class Despesa implements Serializable {

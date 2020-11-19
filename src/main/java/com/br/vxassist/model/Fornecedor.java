@@ -24,8 +24,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Audited
-@AuditTable(value="fornecedor_aud")
+//@Audited
+//@AuditTable(value="fornecedor_aud")
 @Entity
 @Table(name = "FORNECEDOR")
 public class Fornecedor implements Serializable {

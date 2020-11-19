@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -31,8 +32,7 @@ public class FornecedorController implements Serializable {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Fornecedor>> listAll(//@QuerydslPredicate(root = Fornecedor.class) Predicate fornecedor,
-                                                    @ModelAttribute FornecedorFilter fornecedorFilter,
+    public ResponseEntity<Page<Fornecedor>> listAll(@ModelAttribute FornecedorFilter fornecedorFilter,
                                                     Pageable pageable){
         return new ResponseEntity<>(fornecedorServiceImpl.getAll(fornecedorFilter, pageable), HttpStatus.OK);
     }
@@ -46,4 +46,21 @@ public class FornecedorController implements Serializable {
             throw new NotFoundException("Id do Fornecedor não encontrado!");
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Fornecedor> save(@Valid @RequestBody Fornecedor fornecedor){
+        return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedor), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Fornecedor> update(@Valid @RequestBody Fornecedor fornecedor){
+        try{
+            Fornecedor fornec = this.fornecedorServiceImpl.findFornecedorById(fornecedor.getId());
+            return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedor), HttpStatus.OK);
+        }catch (Exception ex) {
+            throw new NotFoundException("Id do Fornecedor não encontrado!");
+        }
+
+    }
+
 }

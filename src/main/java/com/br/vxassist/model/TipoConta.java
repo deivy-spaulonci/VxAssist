@@ -15,8 +15,8 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Audited
-@AuditTable(value="tipo_conta_aud")
+//@Audited
+//@AuditTable(value="tipo_conta_aud")
 @Entity
 @Table(name = "TIPO_CONTA")
 public class TipoConta implements Serializable {

@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Audited
-@AuditTable(value="tipo_despesa_aud")
+//@Audited
+//@AuditTable(value="tipo_despesa_aud")
 @Entity
 @Table(name = "TIPO_DESPESA")
 public class TipoDespesa implements Serializable {

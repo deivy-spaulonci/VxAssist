@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Audited
-@AuditTable(value="extrato_aud")
+//@Audited
+//@AuditTable(value="extrato_aud")
 @Entity
 @Table(name = "EXTRATO")
 public class Extrato implements Serializable {
