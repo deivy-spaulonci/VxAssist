@@ -1,7 +1,9 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,8 +17,10 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-//@Audited
-//@AuditTable(value="extrato_descricao_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "EXTRATO_DESCRICAO")
 public class ExtratoDescricao implements Serializable {
@@ -36,22 +40,6 @@ public class ExtratoDescricao implements Serializable {
     @NotBlank(message = "{notblank.extrato-descricao.nome}")
     @Column(length = 255, nullable = false)
     private String descricao;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
     @Override
     public int hashCode() {

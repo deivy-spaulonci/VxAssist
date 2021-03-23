@@ -23,17 +23,14 @@ public class VxPayofApplication {
 //    @PersistenceContext
 //    private EntityManager entityManager;
 
-
     public static void main(String[] args) {
-
         SpringApplication.run(VxPayofApplication.class, args);
-
     }
 
     @Bean
     public CommandLineRunner demo() {
         return (args) -> {
-            logger.info(" -> INICIANDO VxAssit... 3" + new Date());
+            logger.info(" -> INICIANDO VxAssit... " + new Date());
 
             //throw new GenericErrorException("Código de Barras inválido");
             //                QTipoDespesa qTipoDespesa = QTipoDespesa.tipoDespesa;

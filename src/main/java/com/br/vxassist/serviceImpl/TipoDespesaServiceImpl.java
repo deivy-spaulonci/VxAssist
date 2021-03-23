@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.TipoDespesaDTO;
+import com.br.vxassist.mapper.TipoDespesaMapper;
 import com.br.vxassist.model.TipoDespesa;
 import com.br.vxassist.repository.TipoDespesaRepository;
 import com.br.vxassist.service.TipoDespesaService;
@@ -21,8 +23,10 @@ public class TipoDespesaServiceImpl implements TipoDespesaService {
     @Autowired
     private TipoDespesaRepository tipoDespesaRepository;
 
+    private final TipoDespesaMapper tipoDespesaMapper = TipoDespesaMapper.INSTANCE;
+
     @Override
-    public List<TipoDespesa> getAllSelect() {
-        return tipoDespesaRepository.findAll(Sort.by("nome").ascending());
+    public List<TipoDespesaDTO> get() {
+        return tipoDespesaMapper.toTipoDespesaDtoList(tipoDespesaRepository.findAll(Sort.by("nome").ascending()));
     }
 }

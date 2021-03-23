@@ -1,35 +1,30 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.DespesaDTO;
 import com.br.vxassist.exception.IdNotFound;
-import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.DespesaFilter;
+import com.br.vxassist.mapper.DespesaMapper;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.QDespesa;
 import com.br.vxassist.repository.DespesaRepository;
 import com.br.vxassist.service.DespesaService;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public class DespesaServiceImpl implements DespesaService {
+public class  DespesaServiceImpl implements DespesaService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -37,9 +32,21 @@ public class DespesaServiceImpl implements DespesaService {
     @Autowired
     private DespesaRepository despesaRepository;
 
-    @Override
-    public Page<Despesa> getAll(DespesaFilter despesaFilter, Pageable pageable){
+    private final DespesaMapper despesaMapper = DespesaMapper.INSTANCE;
 
+    @Override
+    public List<DespesaDTO> get(DespesaFilter despesaFilter, Sort sort){
+        List<Despesa> despesas = new ArrayList<>();
+        despesaRepository.findAll(this.getDespesaPredicate(despesaFilter), sort).forEach(despesas::add);
+        return despesaMapper.toDespesaDtoList(despesas);
+    }
+
+    @Override
+    public Page<DespesaDTO> getPage(DespesaFilter despesaFilter, Pageable pageable){
+        return despesaRepository.findAll(this.getDespesaPredicate(despesaFilter), pageable).map(despesaMapper::toDTO);
+    }
+
+    public BooleanBuilder getDespesaPredicate(DespesaFilter despesaFilter){
         QDespesa qDespesa = QDespesa.despesa;
 
         BooleanBuilder where = new BooleanBuilder();
@@ -63,12 +70,12 @@ public class DespesaServiceImpl implements DespesaService {
             where.and(qDespesa.formaPagamento.id.eq(despesaFilter.getFormaPagamento().getId()));
         }
 
-        return despesaRepository.findAll(where, pageable);
+        return where;
     }
 
     @Override
-    public Despesa save(Despesa despesa){
-        return despesaRepository.save(despesa);
+    public DespesaDTO save(DespesaDTO despesaDTO){
+        return despesaMapper.toDTO(despesaRepository.save(despesaMapper.toModel(despesaDTO)));
     }
 
     @Override
@@ -107,8 +114,9 @@ public class DespesaServiceImpl implements DespesaService {
     }
 
     @Override
-    public Despesa findDespesaById(Long id) {
-        return this.despesaRepository.findById(id).orElseThrow(IdNotFound::new);
+    public DespesaDTO findDespesaById(Long id) {
+        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(IdNotFound::new);
+        return despesaMapper.toDTO(despesa);
     }
 
     @Override

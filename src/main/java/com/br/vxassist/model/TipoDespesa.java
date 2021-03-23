@@ -1,8 +1,9 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
-import org.springframework.data.rest.core.annotation.RestResource;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,8 +11,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-//@Audited
-//@AuditTable(value="tipo_despesa_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TIPO_DESPESA")
 public class TipoDespesa implements Serializable {
@@ -31,22 +34,6 @@ public class TipoDespesa implements Serializable {
     @NotBlank(message = "{notblank.tipo-despesa.nome}")
     @Column(length = 60, nullable = false)
     private String nome;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     @Override
     public int hashCode() {

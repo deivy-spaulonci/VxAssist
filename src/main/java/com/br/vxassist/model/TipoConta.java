@@ -1,7 +1,9 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,8 +17,10 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-//@Audited
-//@AuditTable(value="tipo_conta_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TIPO_CONTA")
 public class TipoConta implements Serializable {
@@ -39,30 +43,6 @@ public class TipoConta implements Serializable {
 
     @Column(name = "CONTA_CARTAO", columnDefinition = "false")
     private Boolean contaCartao;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Boolean getContaCartao() {
-        return contaCartao;
-    }
-
-    public void setContaCartao(Boolean contaCartao) {
-        this.contaCartao = contaCartao;
-    }
 
     @Override
     public String toString() {

@@ -1,40 +1,23 @@
 package com.br.vxassist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-//@Audited
-//@AuditTable(value="conta_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "CONTA")
 public class Conta implements Serializable {
@@ -56,19 +39,15 @@ public class Conta implements Serializable {
     @Column(name = "CODIGO_BARRA", length = 60, nullable = false)
     private String codigoBarra;
 
-    @NotNull(message = "{notnull.conta.tipo-conta}")
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "TIPO_CONTA_ID")
     private TipoConta tipoConta;
 
-    @NotNull(message = "{notnull.conta.emissao}")
-    @NotEmpty(message = "{notempty.conta.emissao}")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date emissao;
 
-    @NotNull(message = "{notnull.conta.vencimento}")
-    @NotEmpty(message = "{notempty.conta.vencimento}")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date vencimento;
@@ -79,8 +58,6 @@ public class Conta implements Serializable {
     @Column(name = "TOTAL_PARCELAS", length = 10, columnDefinition = "default 0")
     private int totalParcela;
 
-    @NotNull(message = "{notnull.conta.valor}")
-    @NotEmpty(message = "{notempty.conta.valor}")
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
@@ -169,141 +146,6 @@ public class Conta implements Serializable {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCodigoBarra() {
-        return codigoBarra;
-    }
-
-    public void setCodigoBarra(String codigoBarra) {
-        this.codigoBarra = codigoBarra;
-    }
-
-    public TipoConta getTipoConta() {
-        return tipoConta;
-    }
-
-    public void setTipoConta(TipoConta tipoConta) {
-        this.tipoConta = tipoConta;
-    }
-
-    public Date getEmissao() {
-        return emissao;
-    }
-
-    public void setEmissao(Date emissao) {
-        this.emissao = emissao;
-    }
-
-    public Date getVencimento() {
-        return vencimento;
-    }
-
-    public void setVencimento(Date vencimento) {
-        this.vencimento = vencimento;
-    }
-
-    public int getParcela() {
-        return parcela;
-    }
-
-    public void setParcela(int parcela) {
-        this.parcela = parcela;
-    }
-
-    public int getTotalParcela() {
-        return totalParcela;
-    }
-
-    public void setTotalParcela(int totalParcela) {
-        this.totalParcela = totalParcela;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public Date getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(Date dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-
-    public FormaPagamento getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public BigDecimal getValorPago() {
-        return valorPago;
-    }
-
-    public void setValorPago(BigDecimal valorPago) {
-        this.valorPago = valorPago;
-    }
-
-    public Boolean getCancelado() {
-        return cancelado;
-    }
-
-    public void setCancelado(Boolean cancelado) {
-        this.cancelado = cancelado;
-    }
-
-    public Long getIdCancelamento() {
-        return idCancelamento;
-    }
-
-    public void setIdCancelamento(Long idCancelamento) {
-        this.idCancelamento = idCancelamento;
-    }
-
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
-    public List<LancamentoContaCartao> getLancamentoContaCartao() {
-        return lancamentoContaCartao;
-    }
-
-    public void setLancamentoContaCartao(List<LancamentoContaCartao> lancamentoContaCartao) {
-        this.lancamentoContaCartao = lancamentoContaCartao;
-    }
-
-    public Date getDataLancamento() {
-        return dataLancamento;
-    }
-
-    public void setDataLancamento(Date dataLancamento) {
-        this.dataLancamento = dataLancamento;
-    }
 
     @Override
     public String toString() {

@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.ExtratoDTO;
+import com.br.vxassist.mapper.ExtratoMapper;
 import com.br.vxassist.model.Extrato;
 import com.br.vxassist.repository.ExtratoRepository;
 import com.br.vxassist.service.ExtratoService;
@@ -19,16 +21,18 @@ public class ExtratoServiceImpl implements ExtratoService {
     private EntityManager entityManager;
 
     @Autowired
-    private ExtratoRepository ExtratoRepository;
+    private ExtratoRepository extratoRepository;
+
+    private final ExtratoMapper extratoMapper = ExtratoMapper.INSTANCE;
 
     @Override
-    public Page<Extrato> getAll(Predicate predicate, Pageable pageable) {
-        return ExtratoRepository.findAll(predicate, pageable);
+    public Page<ExtratoDTO> getPage(Predicate predicate, Pageable pageable) {
+        return extratoRepository.findAll(predicate, pageable).map(extratoMapper::toDTO);
     }
 
     @Override
-    public Extrato save(Extrato extrato) {
-        return ExtratoRepository.save(extrato);
+    public ExtratoDTO save(ExtratoDTO extratoDTO) {
+        return extratoMapper.toDTO(extratoRepository.save(extratoMapper.toModel(extratoDTO)));
     }
 
 }

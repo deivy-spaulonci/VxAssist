@@ -1,7 +1,9 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,8 +20,10 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-//@Audited
-//@AuditTable(value="informacao_extra_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "INFORMACAO_EXTRA")
 public class InformacaoExtra implements Serializable {
@@ -43,30 +47,6 @@ public class InformacaoExtra implements Serializable {
     @ManyToOne
     @JoinColumn(name = "TIPO_INFORMACAO_EXTRA_ID", nullable = false)
     private TipoInformacaoExtra tipoInformacaoExtra;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public TipoInformacaoExtra getTipoInformacaoExtra() {
-        return tipoInformacaoExtra;
-    }
-
-    public void setTipoInformacaoExtra(TipoInformacaoExtra tipoInformacaoExtra) {
-        this.tipoInformacaoExtra = tipoInformacaoExtra;
-    }
 
     @Override
     public int hashCode() {

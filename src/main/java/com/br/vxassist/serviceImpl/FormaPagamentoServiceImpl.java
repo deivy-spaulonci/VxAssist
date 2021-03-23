@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.FormaPagamentoDTO;
+import com.br.vxassist.mapper.FormaPagamentoMapper;
 import com.br.vxassist.model.FormaPagamento;
 import com.br.vxassist.model.TipoDespesa;
 import com.br.vxassist.repository.FormaPagamentoRepository;
@@ -22,8 +24,10 @@ public class FormaPagamentoServiceImpl implements FormaPagamentoService {
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
 
+    private final FormaPagamentoMapper formaPagamentoMapper = FormaPagamentoMapper.INSTANCE;
+
     @Override
-    public List<FormaPagamento> getAllSelect() {
-        return formaPagamentoRepository.findAll(Sort.by("nome").ascending());
+    public List<FormaPagamentoDTO> get() {
+        return formaPagamentoMapper.toFormaPagamentoDtoList(formaPagamentoRepository.findAll(Sort.by("nome").ascending()));
     }
 }

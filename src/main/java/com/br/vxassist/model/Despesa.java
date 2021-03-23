@@ -1,16 +1,10 @@
 package com.br.vxassist.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.*;
 import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.beans.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,8 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-//@Audited
-//@AuditTable(value="despesa_aud")
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "DESPESA")
 public class Despesa implements Serializable {
@@ -35,30 +32,23 @@ public class Despesa implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "DESPESA_IDS")
     private Long id;
 
-    @NotNull(message = "{notnull.despesa.tipo-despesa")
     @ManyToOne(optional = false)
     @JoinColumn(name = "TIPO_DESPESA_ID")
     @RestResource(path = "tipoDespesa", rel="tipoDespesa", exported = true)
     private TipoDespesa tipoDespesa;
 
     @ManyToOne
-    @NotNull(message = "{notnull.despesa.fornecedor}")
     @JoinColumn(name = "FORNECEDOR_ID", nullable = true)
     private Fornecedor fornecedor;
 
-    @NotNull(message = "{notnull.despesa.data}")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data;
 
-    @NotNull(message = "{notnull.despesa.forma-pagamento}")
     @ManyToOne(optional = false)
     @JoinColumn(name = "FORMA_PAGAMENTO_ID")
     private FormaPagamento formaPagamento;
 
-    @NotNull(message = "{notnull.despesa.valor}")
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
@@ -74,76 +64,9 @@ public class Despesa implements Serializable {
     @JsonIgnore
     private Date dataLancamento;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TipoDespesa getTipoDespesa() {
-        return tipoDespesa;
-    }
-
-    public void setTipoDespesa(TipoDespesa tipoDespesa) {
-        this.tipoDespesa = tipoDespesa;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public FormaPagamento getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
-    public List<InformacaoExtra> getInformacaoExtra() {
-        return informacaoExtra;
-    }
-
-    public void setInformacaoExtra(List<InformacaoExtra> informacaoExtra) {
-        this.informacaoExtra = informacaoExtra;
-    }
-
-    public Date getDataLancamento() {
-        return dataLancamento;
-    }
-
-    public void setDataLancamento(Date dataLancamento) {
-        this.dataLancamento = dataLancamento;
+    @Override
+    public String toString() {
+        return tipoDespesa.getNome();
     }
 
     @Override

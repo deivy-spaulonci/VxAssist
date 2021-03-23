@@ -1,7 +1,9 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,8 +17,10 @@ import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-//@Audited
-//@AuditTable(value="tipo_informacao_extra_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TIPO_INFORMACAO_EXTRA")
 public class TipoInformacaoExtra implements Serializable {
@@ -36,22 +40,6 @@ public class TipoInformacaoExtra implements Serializable {
     @NotBlank(message = "{notblank.tipo-informacao-extra.nome}")
     @Column(length = 60, nullable = false)
     private String nome;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     @Override
     public String toString() {

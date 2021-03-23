@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.ExtratoDescricaoDTO;
+import com.br.vxassist.mapper.ExtratoDescricaoMapper;
 import com.br.vxassist.model.ExtratoDescricao;
 import com.br.vxassist.model.ExtratoDescricao;
 import com.br.vxassist.repository.ExtratoDescricaoRepository;
@@ -19,16 +21,18 @@ public class ExtratoDescricaoServiceImpl implements ExtratoDescricaoService {
     private EntityManager entityManager;
 
     @Autowired
-    private ExtratoDescricaoRepository ExtratoDescricaoRepository;
+    private ExtratoDescricaoRepository extratoDescricaoRepository;
+
+    private final ExtratoDescricaoMapper extratoDescricaoMapper = ExtratoDescricaoMapper.INSTANCE;
 
     @Override
-    public List<ExtratoDescricao> getAll(Pageable pageable) {
-        return ExtratoDescricaoRepository.findAll(pageable).getContent();
+    public List<ExtratoDescricaoDTO> get(Pageable pageable) {
+        return extratoDescricaoMapper.toExtratoDescricaoDtoList(extratoDescricaoRepository.findAll(pageable).getContent());
     }
 
     @Override
-    public ExtratoDescricao save(ExtratoDescricao extratoDescricao){
-        return ExtratoDescricaoRepository.save(extratoDescricao);
+    public ExtratoDescricaoDTO save(ExtratoDescricaoDTO extratoDescricaoDTO){
+        return extratoDescricaoMapper.toDTO(extratoDescricaoRepository.save(extratoDescricaoMapper.toModel(extratoDescricaoDTO)));
     }
 
 }

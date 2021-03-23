@@ -1,7 +1,10 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,8 +12,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-//@Audited
-//@AuditTable(value="extrato_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "EXTRATO")
 public class Extrato implements Serializable {
@@ -41,45 +46,6 @@ public class Extrato implements Serializable {
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal movimento;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public ExtratoDescricao getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(ExtratoDescricao descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
-    public BigDecimal getMovimento() {
-        return movimento;
-    }
-
-    public void setMovimento(BigDecimal movimento) {
-        this.movimento = movimento;
-    }
 
     @Override
     public int hashCode() {

@@ -1,8 +1,10 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.FornecedorDTO;
 import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.filter.FornecedorFilter;
+import com.br.vxassist.mapper.FornecedorMapper;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.model.QFornecedor;
 import com.br.vxassist.repository.FornecedorRepository;
@@ -13,10 +15,12 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,8 +33,21 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
+    private final FornecedorMapper fornecedorMapper = FornecedorMapper.INSTANCE;
+
     @Override
-    public Page<Fornecedor> getAll(FornecedorFilter fornecedorFilter, Pageable pageable) {
+    public List<FornecedorDTO> get(FornecedorFilter fornecedorFilter, Sort sort){
+        List<Fornecedor> forenecedores = new ArrayList<>();
+        fornecedorRepository.findAll(this.getForenecedorPredicate(fornecedorFilter), sort).forEach(forenecedores::add);
+        return fornecedorMapper.toFornecedorDtoList(forenecedores);
+    }
+
+    @Override
+    public Page<FornecedorDTO> getPage(FornecedorFilter fornecedorFilter, Pageable pageable) {
+        return fornecedorRepository.findAll(this.getForenecedorPredicate(fornecedorFilter), pageable).map(fornecedorMapper::toDTO);
+    }
+
+    public Predicate getForenecedorPredicate(FornecedorFilter fornecedorFilter){
         QFornecedor qFornecedor = QFornecedor.fornecedor;
 
         BooleanBuilder where = new BooleanBuilder();
@@ -53,17 +70,16 @@ public class FornecedorServiceImpl implements FornecedorService {
         if(Objects.nonNull(fornecedorFilter.cidade)){
             where.and(qFornecedor.cidade.eq(fornecedorFilter.cidade));
         }
-
-        return fornecedorRepository.findAll(where, pageable);
+        return where;
     }
 
     @Override
-    public Fornecedor save(Fornecedor fornecedor) {
-        return fornecedorRepository.save(fornecedor);
+    public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
+        return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
     }
 
     @Override
-    public Fornecedor findFornecedorById(Long id) {
-        return fornecedorRepository.findById(id).orElseThrow(IdNotFound::new);
+    public FornecedorDTO findFornecedorById(Long id) {
+        return fornecedorMapper.toDTO(fornecedorRepository.findById(id).orElseThrow(IdNotFound::new));
     }
 }

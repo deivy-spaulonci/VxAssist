@@ -1,7 +1,10 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.ContaDTO;
 import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.ContaFilter;
+import com.br.vxassist.mapper.ContaMapper;
+import com.br.vxassist.mapper.DespesaMapper;
 import com.br.vxassist.model.Conta;
 import com.br.vxassist.model.Despesa;
 import com.br.vxassist.model.QConta;
@@ -13,11 +16,14 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,8 +35,21 @@ public class ContaServiceImpl implements ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
+    private final ContaMapper contaMapper = ContaMapper.INSTANCE;
+
     @Override
-    public Page<Conta> getAll(ContaFilter contaFilter, Pageable pageable) {
+    public List<ContaDTO> get(ContaFilter contaFilter, Sort sort){
+        List<Conta> contas = new ArrayList<>();
+        contaRepository.findAll(this.getContaPredicate(contaFilter), sort).forEach(contas::add);
+        return contaMapper.toContaDtoList(contas);
+    }
+
+    @Override
+    public Page<ContaDTO> getPage(ContaFilter contaFilter, Pageable pageable) {
+        return contaRepository.findAll(this.getContaPredicate(contaFilter), pageable).map(contaMapper::toDTO);
+    }
+
+    public BooleanBuilder getContaPredicate(ContaFilter contaFilter){
         QConta qConta = QConta.conta;
 
         BooleanBuilder where = new BooleanBuilder();
@@ -50,12 +69,12 @@ public class ContaServiceImpl implements ContaService {
         }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
             where.and(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
         }
-        return contaRepository.findAll(where, pageable);
+        return where;
     }
 
     @Override
-    public Conta save(Conta conta){
-        return contaRepository.save(conta);
+    public ContaDTO save(ContaDTO contaDTO){
+        return contaMapper.toDTO(contaRepository.save(contaMapper.toModel(contaDTO)));
     }
 
     @Override
@@ -91,8 +110,9 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public Conta findContaById(Long id) {
-        return this.contaRepository.findById(id).orElseThrow(IdNotFound::new);
+    public ContaDTO findContaById(Long id) {
+        Conta conta = this.contaRepository.findById(id).orElseThrow(IdNotFound::new);
+        return contaMapper.toDTO(conta);
     }
 
     @Override

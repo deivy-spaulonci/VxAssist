@@ -1,7 +1,10 @@
 package com.br.vxassist.model;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,8 +13,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-//@Audited
-//@AuditTable(value="lancamento_conta_cartao_aud")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "LANCAMENTO_CONTA_CARTAO")
 public class LancamentoContaCartao {
@@ -45,54 +50,6 @@ public class LancamentoContaCartao {
 
     @Column(name = "TOTAL_PARCELAS", length = 10, nullable = false)
     private int totalParcela;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public int getParcela() {
-        return parcela;
-    }
-
-    public void setParcela(int parcela) {
-        this.parcela = parcela;
-    }
-
-    public int getTotalParcela() {
-        return totalParcela;
-    }
-
-    public void setTotalParcela(int totalParcela) {
-        this.totalParcela = totalParcela;
-    }
 
     @Override
     public int hashCode() {

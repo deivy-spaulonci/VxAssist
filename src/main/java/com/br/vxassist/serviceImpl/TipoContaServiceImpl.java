@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.TipoContaDTO;
+import com.br.vxassist.mapper.TipoContaMapper;
 import com.br.vxassist.model.TipoConta;
 import com.br.vxassist.repository.TipoContaRepository;
 import com.br.vxassist.service.TipoContaService;
@@ -21,9 +23,11 @@ public class TipoContaServiceImpl implements TipoContaService {
     @Autowired
     private TipoContaRepository tipoContaRepository;
 
+    private final TipoContaMapper tipoContaMapper = TipoContaMapper.INSTANCE;
+
     @Override
-    public List<TipoConta> getAllSelect() {
-        return tipoContaRepository.findAll(Sort.by("nome").ascending());
+    public List<TipoContaDTO> get() {
+        return tipoContaMapper.toTipoContaDtoList(tipoContaRepository.findAll(Sort.by("nome").ascending()));
     }
 
 }

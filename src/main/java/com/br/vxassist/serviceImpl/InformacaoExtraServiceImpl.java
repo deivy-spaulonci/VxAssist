@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.InformacaoExtraDTO;
+import com.br.vxassist.mapper.InformacaoExtraMapper;
 import com.br.vxassist.model.InformacaoExtra;
 import com.br.vxassist.repository.InformacaoExtraRepository;
 import com.br.vxassist.service.InformacaoExtraService;
@@ -20,9 +22,11 @@ public class InformacaoExtraServiceImpl implements InformacaoExtraService {
     @Autowired
     private InformacaoExtraRepository informacaoExtraRepository;
 
+    private final InformacaoExtraMapper informacaoExtraMapper = InformacaoExtraMapper.INSTANCE;
+
     @Override
-    public InformacaoExtra save(InformacaoExtra informacaoExtra){
-        return informacaoExtraRepository.save(informacaoExtra);
+    public InformacaoExtraDTO save(InformacaoExtraDTO informacaoExtraDTO){
+        return informacaoExtraMapper.toDTO(informacaoExtraRepository.save(informacaoExtraMapper.toModel(informacaoExtraDTO)));
     }
 
 }

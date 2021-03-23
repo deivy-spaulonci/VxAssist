@@ -1,5 +1,8 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.EstadoDTO;
+import com.br.vxassist.mapper.ContaMapper;
+import com.br.vxassist.mapper.EstadoMapper;
 import com.br.vxassist.model.Estado;
 import com.br.vxassist.repository.EstadoRepository;
 import com.br.vxassist.service.EstadoService;
@@ -20,8 +23,10 @@ public class EstadoServiceImpl implements EstadoService {
     @Autowired
     private EstadoRepository estadoRepository;
 
+    private final EstadoMapper estadoMapper = EstadoMapper.INSTANCE;
+
     @Override
-    public List<Estado> getAll() {
-        return estadoRepository.findAll(Sort.by("nome").ascending());
+    public List<EstadoDTO> get() {
+        return estadoMapper.toEstadoDtoList(estadoRepository.findAll(Sort.by("nome").ascending()));
     }
 }

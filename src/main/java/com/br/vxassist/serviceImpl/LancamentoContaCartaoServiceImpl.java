@@ -1,5 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
+import com.br.vxassist.dto.LancamentoContaCartaoDTO;
+import com.br.vxassist.mapper.LancamentoContaCartaoMapper;
 import com.br.vxassist.model.LancamentoContaCartao;
 import com.br.vxassist.repository.LancamentoContaCartaoRepository;
 import com.br.vxassist.service.LancamentoContaCartaoService;
@@ -20,9 +22,12 @@ public class LancamentoContaCartaoServiceImpl implements LancamentoContaCartaoSe
     @Autowired
     private LancamentoContaCartaoRepository lancamentoContaCartaoRepository;
 
+    private final LancamentoContaCartaoMapper lancamentoContaCartaoMapper = LancamentoContaCartaoMapper.INSTANCE;
+
     @Override
-    public List<LancamentoContaCartao> getAll() {
-        return lancamentoContaCartaoRepository.findAll();
+    public List<LancamentoContaCartaoDTO> get() {
+        return lancamentoContaCartaoMapper.toLancamentoContaCartaoaDtoList(lancamentoContaCartaoRepository.findAll());
+
     }
 }
 

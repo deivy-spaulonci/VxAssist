@@ -1,9 +1,9 @@
 package com.br.vxassist.service;
 
-import com.br.vxassist.model.TipoInformacaoExtra;
+import com.br.vxassist.dto.TipoInformacaoExtraDTO;
 
 import java.util.List;
 
 public interface TipoInformacaoExtraService {
-    public abstract List<TipoInformacaoExtra> getAllSelect();
+    public abstract List<TipoInformacaoExtraDTO> get();
 }
