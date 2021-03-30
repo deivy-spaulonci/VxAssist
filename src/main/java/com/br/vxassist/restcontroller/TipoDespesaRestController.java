@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tipo-despesa")
+@RequestMapping("/api/v1/tipo-despesa")
 public class TipoDespesaRestController implements Serializable {
 
     @Autowired

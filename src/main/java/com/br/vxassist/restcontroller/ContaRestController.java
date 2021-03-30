@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/conta")
+@RequestMapping("/api/v1/conta")
 public class ContaRestController implements Serializable {
     @Autowired
     private final ContaServiceImpl contaServiceImpl;

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cidade")
+@RequestMapping("/api/v1/cidade")
 public class CidadeRestController implements Serializable {
 
     @Autowired

@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/forma-pagamento")
+@RequestMapping("/api/v1/forma-pagamento")
 public class FormaPagamentoRestController implements Serializable {
 
 
