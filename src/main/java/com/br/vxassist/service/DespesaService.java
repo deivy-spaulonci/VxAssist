@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface DespesaService {
 
+    abstract List<DespesaDTO> get(DespesaFilter despesaFitler);
+
     abstract List<DespesaDTO> get(DespesaFilter despesaFitler, Sort sort);
 
     abstract Page<DespesaDTO> getPage(DespesaFilter despesaFitler, Pageable pageable);

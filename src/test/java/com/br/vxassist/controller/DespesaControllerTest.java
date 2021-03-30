@@ -1,6 +1,6 @@
 package com.br.vxassist.controller;
 
-import com.br.vxassist.restcontroller.DespesaController;
+import com.br.vxassist.restcontroller.DespesaRestController;
 import com.br.vxassist.service.DespesaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -22,7 +21,7 @@ public class DespesaControllerTest {
     private DespesaService despesaService;
 
     @InjectMocks
-    private DespesaController despesaController;
+    private DespesaRestController despesaController;
 
     @BeforeEach
     void setUp(){

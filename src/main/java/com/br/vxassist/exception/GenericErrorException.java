@@ -14,4 +14,8 @@ public class GenericErrorException extends RuntimeException {
         super(message);
         logger.error(message);
     }
+
+    public GenericErrorException(String message, Throwable cause){
+        super(message,cause);
+    }
 }

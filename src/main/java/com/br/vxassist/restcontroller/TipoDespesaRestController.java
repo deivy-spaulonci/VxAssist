@@ -14,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tipo-despesa")
-public class TipoDespesaController implements Serializable {
+public class TipoDespesaRestController implements Serializable {
 
     @Autowired
     private final TipoDespesaServiceImpl tipoDespesaServiceImpl;
 
     @Autowired
-    public TipoDespesaController(TipoDespesaServiceImpl tipoDespesaServiceImpl){
+    public TipoDespesaRestController(TipoDespesaServiceImpl tipoDespesaServiceImpl){
         super();
         this.tipoDespesaServiceImpl = tipoDespesaServiceImpl;
     }

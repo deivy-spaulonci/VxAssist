@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/despesa")
-public class DespesaController implements Serializable {
+public class DespesaRestController implements Serializable {
 
     @Autowired
     private final DespesaServiceImpl despesaServiceImpl;
@@ -31,7 +31,7 @@ public class DespesaController implements Serializable {
 //    }
 
     @Autowired
-    public DespesaController(DespesaServiceImpl despesaServiceImpl){
+    public DespesaRestController(DespesaServiceImpl despesaServiceImpl){
         super();
         this.despesaServiceImpl = despesaServiceImpl;
     }
@@ -62,7 +62,6 @@ public class DespesaController implements Serializable {
     public DespesaDTO findById(@PathVariable Long id){
         return this.despesaServiceImpl.findDespesaById(id);
     }
-
 
     @PostMapping
     public ResponseEntity<DespesaDTO> save(@Valid @RequestBody DespesaDTO despesaDTO){

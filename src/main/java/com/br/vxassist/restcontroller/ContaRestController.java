@@ -18,12 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/conta")
-public class ContaController implements Serializable {
+public class ContaRestController implements Serializable {
     @Autowired
     private final ContaServiceImpl contaServiceImpl;
 
     @Autowired
-    public ContaController(ContaServiceImpl contaServiceImpl){
+    public ContaRestController(ContaServiceImpl contaServiceImpl){
         super();
         this.contaServiceImpl = contaServiceImpl;
     }

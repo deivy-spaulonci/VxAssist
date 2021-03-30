@@ -74,6 +74,18 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
+    public List<Fornecedor> getSelect(FornecedorFilter fornecedorFilter){
+        QFornecedor qFornecedor = QFornecedor.fornecedor;
+        JPAQuery query = new JPAQuery(entityManager);
+        query.select(qFornecedor.id, qFornecedor.nome);
+        query.from(qFornecedor);
+        if(fornecedorFilter != null){
+            query.where(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome+"%"));
+        }
+        return query.fetch();
+    }
+
+    @Override
     public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
         return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
     }

@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TipoDespesaDTO {
+
     private Long id;
 
     @Size(min = 3, message = "{size.tipo-despesa.nome}")

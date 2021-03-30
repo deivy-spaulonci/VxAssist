@@ -14,6 +14,8 @@ public interface FornecedorService {
 
     abstract List<FornecedorDTO> get(FornecedorFilter fornecedorFilter, Sort sort);
 
+    abstract List<Fornecedor> getSelect(FornecedorFilter fornecedorFilter);
+
     abstract FornecedorDTO save(FornecedorDTO fornecedorDTO);
 
     abstract FornecedorDTO findFornecedorById(Long id);

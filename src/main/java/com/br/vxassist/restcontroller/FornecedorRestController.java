@@ -19,12 +19,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/fornecedor")
-public class FornecedorController implements Serializable {
+public class FornecedorRestController implements Serializable {
 
     @Autowired
     private final FornecedorServiceImpl fornecedorServiceImpl;
 
-    public FornecedorController(FornecedorServiceImpl fornecedorServiceImpl){
+    public FornecedorRestController(FornecedorServiceImpl fornecedorServiceImpl){
         super();
         this.fornecedorServiceImpl = fornecedorServiceImpl;
     }

@@ -13,14 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/forma-pagamento")
-public class FormaPagamentoController implements Serializable {
+public class FormaPagamentoRestController implements Serializable {
 
 
     @Autowired
     private final FormaPagamentoServiceImpl formaPagamentoServiceImpl;
 
     @Autowired
-    public FormaPagamentoController(FormaPagamentoServiceImpl formaPagamentoServiceImpl){
+    public FormaPagamentoRestController(FormaPagamentoServiceImpl formaPagamentoServiceImpl){
         super();
         this.formaPagamentoServiceImpl = formaPagamentoServiceImpl;
     }

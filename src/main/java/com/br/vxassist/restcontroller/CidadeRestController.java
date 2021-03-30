@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cidade")
-public class CidadeController implements Serializable {
+public class CidadeRestController implements Serializable {
 
     @Autowired
     private final CidadeServiceImpl cidadeServiceImpl;
 
     @Autowired
-    public CidadeController(CidadeServiceImpl cidadeServiceImpl){
+    public CidadeRestController(CidadeServiceImpl cidadeServiceImpl){
         super();
         this.cidadeServiceImpl = cidadeServiceImpl;
     }
