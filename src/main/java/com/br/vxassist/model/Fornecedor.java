@@ -48,12 +48,12 @@ public class Fornecedor implements Serializable {
 
     @Size(min = 3, message = "{size.fornecedor.nome}")
     @NotBlank(message = "{notblank.fornecedor.nome}")
-    @Column(length = 60, nullable = false)
+    @Column(length = 255, nullable = false)
     private String nome;
 
     @Size(min = 3, message = "{size.fornecedor.razao-social}")
     @NotBlank(message = "{notblank.fornecedor.razao-social}")
-    @Column(name = "RAZAO_SOCIAL", length = 60, nullable = false)
+    @Column(name = "RAZAO_SOCIAL", length = 255, nullable = false)
     private String razaoSocial;
 
     @Column(length = 60, nullable = true)

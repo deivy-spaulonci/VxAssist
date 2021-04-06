@@ -10,11 +10,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 @RestController
@@ -35,9 +41,10 @@ public class FornecedorRestController implements Serializable {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<FornecedorDTO>> listAll(@ModelAttribute FornecedorFilter fornecedorFilter,
+    public Page<FornecedorDTO> listAll(@ModelAttribute FornecedorFilter fornecedorFilter,
                                                        Pageable pageable){
-        return new ResponseEntity<>(fornecedorServiceImpl.getPage(fornecedorFilter, pageable), HttpStatus.OK);
+        Page<FornecedorDTO> resultPage = fornecedorServiceImpl.getPage(fornecedorFilter, pageable);
+        return resultPage;
     }
 
     @GetMapping("/{id}")
@@ -64,6 +71,42 @@ public class FornecedorRestController implements Serializable {
             throw new NotFoundException("Id do Fornecedor não encontrado!");
         }
 
+    }
+
+    @GetMapping(value = "/consultacnpj", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String consultaCNPJ(@RequestParam(name = "cnpj") String cnpj){
+        String URL_API = "https://www.receitaws.com.br/v1/cnpj/"+cnpj;
+        HttpURLConnection con = null;
+
+        try {
+            URL url = null;
+            url = new URL(URL_API);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.connect();
+            System.out.println(getJson(url));
+            return getJson(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getJson(URL url) {
+        if (url == null)
+            throw new RuntimeException("URL é null");
+
+        String html = null;
+        StringBuilder sB = new StringBuilder();
+        try (BufferedReader bR = new BufferedReader(new InputStreamReader(url.openStream()))) {
+            while ((html = bR.readLine()) != null)
+                sB.append(html);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return sB.toString();
     }
 
 }

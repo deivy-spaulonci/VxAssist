@@ -39,7 +39,6 @@ public class Conta implements Serializable {
     @Column(name = "CODIGO_BARRA", length = 60, nullable = false)
     private String codigoBarra;
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "TIPO_CONTA_ID")
     private TipoConta tipoConta;

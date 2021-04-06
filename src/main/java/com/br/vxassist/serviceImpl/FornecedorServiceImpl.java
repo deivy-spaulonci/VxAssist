@@ -68,7 +68,12 @@ public class FornecedorServiceImpl implements FornecedorService {
         }
 
         if(Objects.nonNull(fornecedorFilter.cidade)){
-            where.and(qFornecedor.cidade.eq(fornecedorFilter.cidade));
+            if(Objects.nonNull(fornecedorFilter.cidade.getId())){
+                where.and(qFornecedor.cidade.id.eq(fornecedorFilter.cidade.getId()));
+            }else if (!fornecedorFilter.cidade.getNome().trim().isEmpty()){
+                where.and(qFornecedor.cidade.nome.likeIgnoreCase("%"+fornecedorFilter.cidade.getNome()+"%"));
+            }
+
         }
         return where;
     }

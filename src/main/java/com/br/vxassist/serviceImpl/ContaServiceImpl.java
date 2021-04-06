@@ -69,6 +69,13 @@ public class ContaServiceImpl implements ContaService {
         }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
             where.and(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
         }
+        if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.between(contaFilter.getEmissaoInicial(), contaFilter.getEmissaoFinal()));
+        }else if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.isNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.goe(contaFilter.getEmissaoInicial()));
+        }else if(Objects.isNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.loe(contaFilter.getEmissaoFinal()));
+        }
         return where;
     }
 
@@ -104,6 +111,14 @@ public class ContaServiceImpl implements ContaService {
             query.where(qConta.vencimento.goe(contaFilter.getVencimentoInicial()));
         }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
             query.where(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
+        }
+
+        if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            query.where(qConta.emissao.between(contaFilter.getEmissaoInicial(), contaFilter.getEmissaoFinal()));
+        }else if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.isNull(contaFilter.getEmissaoFinal())){
+            query.where(qConta.emissao.goe(contaFilter.getEmissaoInicial()));
+        }else if(Objects.isNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            query.where(qConta.emissao.loe(contaFilter.getEmissaoFinal()));
         }
 
         return query.fetch().get(0);

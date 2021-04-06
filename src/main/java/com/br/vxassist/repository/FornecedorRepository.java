@@ -12,11 +12,8 @@ import java.util.List;
 
 @Repository
 public interface FornecedorRepository extends JpaRepository<Fornecedor, Long>,
-        QuerydslPredicateExecutor<Fornecedor>, QuerydslBinderCustomizer<QFornecedor> {
+        QuerydslPredicateExecutor<Fornecedor>{
 
-    @Override
-    default public void customize(QuerydslBindings bindings, QFornecedor root) {
-    }
 
 }
 

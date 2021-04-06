@@ -42,10 +42,9 @@ public class ContaDTO {
 
     @NotNull(message = "{notnull.conta.valor}")
     @NotEmpty(message = "{notempty.conta.valor}")
-
     private BigDecimal valor;
 
-    private Date dataPagagamento;
+    private Date dataPagamento;
 
     private FormaPagamento formaPagamento;
 

@@ -26,7 +26,7 @@ public class TipoDespesaRestController implements Serializable {
     }
 
     @GetMapping()
-    public List<TipoDespesaDTO> getSelect(Pageable pageable){
+    public List<TipoDespesaDTO> get(Pageable pageable){
         return tipoDespesaServiceImpl.get();
     }
 

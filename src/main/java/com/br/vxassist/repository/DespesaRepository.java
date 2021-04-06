@@ -1,17 +1,10 @@
 package com.br.vxassist.repository;
 
-import com.br.vxassist.dto.DespesaDTO;
 import com.br.vxassist.model.Despesa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-
-
-//@RepositoryRestResource(
-//        excerptProjection = DespesaProjection.class,
-//        path = "despesa"
-//)
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa, Long>,
         QuerydslPredicateExecutor<Despesa> {
