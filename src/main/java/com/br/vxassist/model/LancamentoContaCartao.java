@@ -41,7 +41,6 @@ public class LancamentoContaCartao {
     @JoinColumn(name = "FORNECEDOR_ID", nullable = true)
     private Fornecedor fornecedor;
 
-    @NotEmpty(message = "Valor vazio!")
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 

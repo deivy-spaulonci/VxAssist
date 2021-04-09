@@ -1,6 +1,7 @@
 package com.br.vxassist.restcontroller;
 
 import com.br.vxassist.dto.DespesaDTO;
+import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,14 +66,16 @@ public class DespesaRestController implements Serializable {
 
     @PostMapping
     public ResponseEntity<DespesaDTO> save(@Valid @RequestBody DespesaDTO despesaDTO){
-        this.despesaServiceImpl.save(despesaDTO);
-        return new ResponseEntity<>(despesaDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(this.despesaServiceImpl.save(despesaDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<DespesaDTO> update(@Valid @RequestBody DespesaDTO despesaDTO){
-        this.despesaServiceImpl.save(despesaDTO);
-        return new ResponseEntity<>(despesaDTO, HttpStatus.GONE);
+        try{
+            return new ResponseEntity<>(this.despesaServiceImpl.save(this.despesaServiceImpl.findDespesaById(despesaDTO.getId())), HttpStatus.OK);
+        }catch (Exception ex) {
+            throw new NotFoundException("Id do Despesa não encontrado!");
+        }
     }
 
     @DeleteMapping("/{id}")

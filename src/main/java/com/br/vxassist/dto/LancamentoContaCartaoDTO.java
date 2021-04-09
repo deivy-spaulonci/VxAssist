@@ -23,7 +23,6 @@ public class LancamentoContaCartaoDTO {
 
     private Fornecedor fornecedor;
 
-    @NotEmpty(message = "Valor vazio!")
     private BigDecimal valor;
 
     private int parcela;

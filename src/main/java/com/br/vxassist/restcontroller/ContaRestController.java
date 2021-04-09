@@ -1,6 +1,7 @@
 package com.br.vxassist.restcontroller;
 
-import com.br.vxassist.dto.ContaDTO;
+
+import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.ContaFilter;
 import com.br.vxassist.serviceImpl.ContaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import com.br.vxassist.dto.ContaDTO;
 
 @RestController
 @RequestMapping("/api/v1/conta")
@@ -40,11 +42,18 @@ public class ContaRestController implements Serializable {
         return resultPage;
     }
 
-
     @PostMapping
     public ResponseEntity<ContaDTO> save(@Valid @RequestBody ContaDTO contaDTO){
-        this.contaServiceImpl.save(contaDTO);
-        return new ResponseEntity<>(contaDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(this.contaServiceImpl.save(contaDTO), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<ContaDTO> update(@Valid @RequestBody ContaDTO contaDTO){
+        try{
+            return new ResponseEntity<>(this.contaServiceImpl.save(this.contaServiceImpl.findContaById(contaDTO.getId())), HttpStatus.OK);
+        }catch (Exception ex) {
+            throw new NotFoundException("Id da Conta não encontrado!");
+        }
     }
 
     @GetMapping("/totalRegistros")

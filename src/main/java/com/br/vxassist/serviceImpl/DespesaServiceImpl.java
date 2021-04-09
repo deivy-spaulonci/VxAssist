@@ -21,7 +21,6 @@ import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 @Service

@@ -63,10 +63,9 @@ public class FornecedorRestController implements Serializable {
     }
 
     @PutMapping
-    public ResponseEntity<FornecedorDTO> update(@Valid @RequestBody Fornecedor fornecedor){
+    public ResponseEntity<FornecedorDTO> update(@Valid @RequestBody FornecedorDTO fornecedorDTO){
         try{
-            FornecedorDTO fornecedorDTO = this.fornecedorServiceImpl.findFornecedorById(fornecedor.getId());
-            return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedorDTO), HttpStatus.OK);
+            return new ResponseEntity<>(this.fornecedorServiceImpl.save(this.fornecedorServiceImpl.findFornecedorById(fornecedorDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Fornecedor não encontrado!");
         }

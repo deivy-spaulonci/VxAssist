@@ -24,7 +24,7 @@ public class FormaPagamento implements Serializable {
             pkColumnName = "tabela",
             pkColumnValue = "forma_pagamento_id",
             allocationSize = 1,
-            initialValue = 13,
+            initialValue = 14,
             valueColumnName = "id_atual")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "FORMA_PAGAMENTO_IDS")
     private Long id;

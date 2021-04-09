@@ -90,6 +90,7 @@ public class Conta implements Serializable {
     @Column(name = "DATA_LANCAMENTO", insertable = false, nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date dataLancamento;
 
+
     // 2 - Pago
     // 1 - Em Aberto
     // 0 - Vencimento Hoje

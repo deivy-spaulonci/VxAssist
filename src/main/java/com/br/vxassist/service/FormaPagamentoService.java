@@ -6,5 +6,11 @@ import java.util.List;
 
 public interface FormaPagamentoService {
     public abstract List<FormaPagamentoDTO> get();
+
+    abstract FormaPagamentoDTO save(FormaPagamentoDTO formaPagamentoDTO);
+
+    abstract FormaPagamentoDTO findFormaPagamentoById(Long id);
+
+
 }
 

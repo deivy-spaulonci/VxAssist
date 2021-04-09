@@ -3,6 +3,7 @@ package com.br.vxassist.filter;
 import com.br.vxassist.model.FormaPagamento;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.model.TipoDespesa;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.querydsl.core.annotations.QueryProjection;

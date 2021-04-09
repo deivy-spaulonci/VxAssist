@@ -1,6 +1,6 @@
 package com.br.vxassist.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -61,7 +61,6 @@ public class Despesa implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATA_LACAMENTO", insertable = false, nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @JsonIgnore
     private Date dataLancamento;
 
     @Override
