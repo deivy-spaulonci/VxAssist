@@ -15,5 +15,5 @@ public interface TipoDespesaMapper {
 
     TipoDespesaDTO toDTO(TipoDespesa tipoDespesa);
 
-    List<TipoDespesaDTO> toTipoDespesaDtoList(List<TipoDespesa> tiposConta);
+    List<TipoDespesaDTO> toTipoDespesaDtoList(List<TipoDespesa> tiposDespesa);
 }

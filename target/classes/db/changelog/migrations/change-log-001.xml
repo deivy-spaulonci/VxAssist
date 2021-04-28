@@ -12,221 +12,225 @@
 
     <changeSet id="1" author="deivy">
         <!--ESTADO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/estado.csv"
-                  schemaName="public"
-                  separator=","
-                  tableName="estado">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-            <column name="sigla" type="STRING"></column>
-        </loadData>
+<!--        <createTable tableName="estado">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--            <column name="sigla" type="STRING"></column>-->
+<!--        </createTable>-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/estado.csv"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="estado">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--            <column name="sigla" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--CIDADE-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/cidade.csv"
-                  schemaName="public"
-                  separator=","
-                  tableName="cidade">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-            <column name="estado_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;CIDADE&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/cidade.csv"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="cidade">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--            <column name="estado_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--TIPO DESPESA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/tipo-despesa.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="tipo_despesa">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-        </loadData>
+<!--        &lt;!&ndash;TIPO DESPESA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/tipo-despesa.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="tipo_despesa">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--FORMA PAGAMENTO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/forma-pagamento.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="forma_pagamento">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-        </loadData>
+<!--        &lt;!&ndash;FORMA PAGAMENTO&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/forma-pagamento.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="forma_pagamento">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--TIPO INFORMACAO EXTRA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/tipo-informacao-extra.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="tipo_informacao_extra">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-        </loadData>
+<!--        &lt;!&ndash;TIPO INFORMACAO EXTRA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/tipo-informacao-extra.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="tipo_informacao_extra">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--TIPO CONTA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/tipo-conta.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="tipo_conta">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-        </loadData>
+<!--        &lt;!&ndash;TIPO CONTA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/tipo-conta.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="tipo_conta">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--EXTRATO DESCRICAO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/extrato-descricao.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="extrato_descricao">
-            <column name="id" type="NUMERIC"></column>
-            <column name="nome" type="STRING"></column>
-        </loadData>
+<!--        &lt;!&ndash;EXTRATO DESCRICAO&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/extrato-descricao.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="extrato_descricao">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--        </loadData>-->
 
-        <!--EXTRATO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/extrato.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="extrato">
-            <column name="id" type="NUMERIC"></column>
-            <column name="data" type="DATE"></column>
-            <column name="documento" type="STRING"></column>
-            <column name="movimento" type="NUMERIC"></column>
-            <column name="extrato_descricao_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;EXTRATO&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/extrato.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="extrato">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="data" type="DATE"></column>-->
+<!--            <column name="documento" type="STRING"></column>-->
+<!--            <column name="movimento" type="NUMERIC"></column>-->
+<!--            <column name="extrato_descricao_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--FORNECEDOR-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/fornecedor.csv"
+<!--        &lt;!&ndash;FORNECEDOR&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/fornecedor.csv"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="fornecedor">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="bairro" type="DATE"></column>-->
+<!--            <column name="cep" type="STRING"></column>-->
+<!--            <column name="cnpj" type="STRING"></column>-->
+<!--            <column name="complemento" type="STRING"></column>-->
+<!--            <column name="endereco" type="STRING"></column>-->
+<!--            <column name="inscricao_estadual" type="STRING"></column>-->
+<!--            <column name="nome" type="STRING"></column>-->
+<!--            <column name="razao_social" type="STRING"></column>-->
+<!--            <column name="telefone" type="STRING"></column>-->
+<!--            <column name="cidade_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-                  schemaName="public"
-                  separator=","
-                  tableName="fornecedor">
-            <column name="id" type="NUMERIC"></column>
-            <column name="bairro" type="DATE"></column>
-            <column name="cep" type="STRING"></column>
-            <column name="cnpj" type="STRING"></column>
-            <column name="complemento" type="STRING"></column>
-            <column name="endereco" type="STRING"></column>
-            <column name="inscricao_estadual" type="STRING"></column>
-            <column name="nome" type="STRING"></column>
-            <column name="razao_social" type="STRING"></column>
-            <column name="telefone" type="STRING"></column>
-            <column name="cidade_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;INFORMACAO EXTRA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/informacao-extra.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="informacao_extra">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="numero" type="STRING"></column>-->
+<!--            <column name="tipo_informacao_extra_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--INFORMACAO EXTRA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/informacao-extra.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="informacao_extra">
-            <column name="id" type="NUMERIC"></column>
-            <column name="numero" type="STRING"></column>
-            <column name="tipo_informacao_extra_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;LANCAMENTO CONTA CARTAO&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/lancamento-conta-cartao.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="lancamento_conta_cartao">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="data" type="DATE"></column>-->
+<!--            <column name="parcela" type="NUMERIC"></column>-->
+<!--            <column name="total_parcelas" type="NUMERIC"></column>-->
+<!--            <column name="valor" type="NUMERIC"></column>-->
+<!--            <column name="fornecedor_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--LANCAMENTO CONTA CARTAO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/lancamento-conta-cartao.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="lancamento_conta_cartao">
-            <column name="id" type="NUMERIC"></column>
-            <column name="data" type="DATE"></column>
-            <column name="parcela" type="NUMERIC"></column>
-            <column name="total_parcelas" type="NUMERIC"></column>
-            <column name="valor" type="NUMERIC"></column>
-            <column name="fornecedor_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;DESPESA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/despesa.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="despesa">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="data" type="DATE"></column>-->
+<!--            <column name="data_lacamento" type="DATE"></column>-->
+<!--            <column name="obs" type="STRING"></column>-->
+<!--            <column name="valor" type="NUMERIC"></column>-->
+<!--            <column name="forma_pagamento_id" type="NUMERIC"></column>-->
+<!--            <column name="fornecedor_id" type="NUMERIC"></column>-->
+<!--            <column name="tipo_despesa_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--DESPESA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/despesa.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="despesa">
-            <column name="id" type="NUMERIC"></column>
-            <column name="data" type="DATE"></column>
-            <column name="data_lacamento" type="DATE"></column>
-            <column name="obs" type="STRING"></column>
-            <column name="valor" type="NUMERIC"></column>
-            <column name="forma_pagamento_id" type="NUMERIC"></column>
-            <column name="fornecedor_id" type="NUMERIC"></column>
-            <column name="tipo_despesa_id" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;DESPESA INFORMACAO EXTRA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/despesa-informacao-extra.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="despesa_informacao_extra">-->
+<!--            <column name="DESPESA_ID" type="NUMERIC"></column>-->
+<!--            <column name="INFORMACAO_EXTRA_ID" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--DESPESA INFORMACAO EXTRA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/despesa-informacao-extra.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="despesa_informacao_extra">
-            <column name="DESPESA_ID" type="NUMERIC"></column>
-            <column name="INFORMACAO_EXTRA_ID" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;CONTA&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/conta.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="conta">-->
+<!--            <column name="id" type="NUMERIC"></column>-->
+<!--            <column name="cancelado" type="BOOLEAN"></column>-->
+<!--            <column name="codigo_barra" type="STRING"></column>-->
+<!--            <column name="data_lancamento" type="DATE"></column>-->
+<!--            <column name="data_pagamento" type="DATE"></column>-->
+<!--            <column name="emissao" type="DATE"></column>-->
+<!--            <column name="id_cancelamento" type="NUMERIC"></column>-->
+<!--            <column name="numero" type="STRING"></column>-->
+<!--            <column name="obs" type="STRING"></column>-->
+<!--            <column name="parcela" type="NUMERIC"></column>-->
+<!--            <column name="total_parcelas" type="NUMERIC"></column>-->
+<!--            <column name="valor" type="NUMERIC"></column>-->
+<!--            <column name="valor_pago" type="NUMERIC"></column>-->
+<!--            <column name="vencimento" type="DATE"></column>-->
+<!--            <column name="forma_pagamento_id" type="NUMERIC"></column>-->
+<!--            <column name="tipo_conta_id" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
-        <!--CONTA-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/conta.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="conta">
-            <column name="id" type="NUMERIC"></column>
-            <column name="cancelado" type="BOOLEAN"></column>
-            <column name="codigo_barra" type="STRING"></column>
-            <column name="data_lancamento" type="DATE"></column>
-            <column name="data_pagamento" type="DATE"></column>
-            <column name="emissao" type="DATE"></column>
-            <column name="id_cancelamento" type="NUMERIC"></column>
-            <column name="numero" type="STRING"></column>
-            <column name="obs" type="STRING"></column>
-            <column name="parcela" type="NUMERIC"></column>
-            <column name="total_parcelas" type="NUMERIC"></column>
-            <column name="valor" type="NUMERIC"></column>
-            <column name="valor_pago" type="NUMERIC"></column>
-            <column name="vencimento" type="DATE"></column>
-            <column name="forma_pagamento_id" type="NUMERIC"></column>
-            <column name="tipo_conta_id" type="NUMERIC"></column>
-        </loadData>
-
-        <!--CONTA LANCAMENTO CONTA CARTAO-->
-        <loadData catalogName="public"
-                  encoding="UTF-8"
-                  file="db/changelog/migrations/inserts/conta-lancamento-conta-cartao.csv"
-                  quotchar="'"
-                  schemaName="public"
-                  separator=","
-                  tableName="conta_lancamento_conta_cartao">
-            <column name="CONTA_ID" type="NUMERIC"></column>
-            <column name="LANCAMENTO_CONTA_CARTAO_ID" type="NUMERIC"></column>
-        </loadData>
+<!--        &lt;!&ndash;CONTA LANCAMENTO CONTA CARTAO&ndash;&gt;-->
+<!--        <loadData catalogName="public"-->
+<!--                  encoding="UTF-8"-->
+<!--                  file="db/changelog/migrations/inserts/conta-lancamento-conta-cartao.csv"-->
+<!--                  quotchar="'"-->
+<!--                  schemaName="public"-->
+<!--                  separator=","-->
+<!--                  tableName="conta_lancamento_conta_cartao">-->
+<!--            <column name="CONTA_ID" type="NUMERIC"></column>-->
+<!--            <column name="LANCAMENTO_CONTA_CARTAO_ID" type="NUMERIC"></column>-->
+<!--        </loadData>-->
 
 
     </changeSet>

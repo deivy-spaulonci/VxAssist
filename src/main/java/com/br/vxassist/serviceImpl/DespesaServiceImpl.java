@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class  DespesaServiceImpl implements DespesaService {
+public class DespesaServiceImpl implements DespesaService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -88,7 +88,8 @@ public class  DespesaServiceImpl implements DespesaService {
 
     @Override
     public DespesaDTO save(DespesaDTO despesaDTO){
-        return despesaMapper.toDTO(despesaRepository.save(despesaMapper.toModel(despesaDTO)));
+        Despesa despesa = despesaMapper.toModel(despesaDTO);
+        return despesaMapper.toDTO(despesaRepository.save(despesa));
     }
 
     @Override

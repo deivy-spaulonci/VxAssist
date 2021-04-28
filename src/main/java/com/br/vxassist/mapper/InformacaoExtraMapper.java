@@ -11,9 +11,9 @@ import java.util.List;
 public interface InformacaoExtraMapper {
     InformacaoExtraMapper INSTANCE = Mappers.getMapper(InformacaoExtraMapper.class);
 
-    InformacaoExtra toModel(InformacaoExtraDTO informacaoExtraDTO);
+    InformacaoExtra toModel(InformacaoExtraDTO contaDTO);
 
-    InformacaoExtraDTO toDTO(InformacaoExtra informacaoExtra);
+    InformacaoExtraDTO toDTO(InformacaoExtra InformacaoExtra);
 
     List<InformacaoExtraDTO> toInformacaoExtraDtoList(List<InformacaoExtra> informacoesExtra);
 }
