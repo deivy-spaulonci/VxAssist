@@ -58,8 +58,13 @@ public class FornecedorRestController implements Serializable {
     }
 
     @PostMapping
-    public ResponseEntity<FornecedorDTO> save(@Valid @RequestBody FornecedorDTO fornecedorDTO){
-        return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedorDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> save(@Valid @RequestBody FornecedorDTO fornecedorDTO){
+        try{
+            return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedorDTO), HttpStatus.CREATED);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(), null, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping

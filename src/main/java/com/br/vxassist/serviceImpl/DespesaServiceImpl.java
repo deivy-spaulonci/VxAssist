@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class DespesaServiceImpl implements DespesaService {
+public class DespesaServiceImpl implements DespesaService{
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -38,14 +38,14 @@ public class DespesaServiceImpl implements DespesaService {
     public List<DespesaDTO> get(DespesaFilter despesaFilter){
         List<Despesa> despesas = new ArrayList<>();
         despesaRepository.findAll(this.getDespesaPredicate(despesaFilter)).forEach(despesas::add);
-        return despesaMapper.toDespesaDtoList(despesas);
+        return despesaMapper.toDespesaDTOtoList(despesas);
     }
 
     @Override
     public List<DespesaDTO> get(DespesaFilter despesaFilter, Sort sort){
         List<Despesa> despesas = new ArrayList<>();
         despesaRepository.findAll(this.getDespesaPredicate(despesaFilter), sort).forEach(despesas::add);
-        return despesaMapper.toDespesaDtoList(despesas);
+        return despesaMapper.toDespesaDTOtoList(despesas);
     }
 
     @Override

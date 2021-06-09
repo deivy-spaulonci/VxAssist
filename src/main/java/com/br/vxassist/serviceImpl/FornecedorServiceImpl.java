@@ -1,6 +1,7 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.FornecedorDTO;
+import com.br.vxassist.exception.GenericErrorException;
 import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.filter.FornecedorFilter;
@@ -60,7 +61,7 @@ public class FornecedorServiceImpl implements FornecedorService {
         }
 
         if(Objects.nonNull(fornecedorFilter.razaoSocial) && !fornecedorFilter.razaoSocial.trim().isEmpty()){
-            where.and(qFornecedor.razaoSocial.likeIgnoreCase(fornecedorFilter.razaoSocial));
+            where.and(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
         }
 
         if(Objects.nonNull(fornecedorFilter.cnpj) && !fornecedorFilter.cnpj.trim().isEmpty()){
@@ -84,15 +85,30 @@ public class FornecedorServiceImpl implements FornecedorService {
         JPAQuery query = new JPAQuery(entityManager);
         query.select(qFornecedor.id, qFornecedor.nome);
         query.from(qFornecedor);
-        if(fornecedorFilter != null){
-            query.where(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome+"%"));
+        if(Objects.nonNull(fornecedorFilter)){
+            if(Objects.nonNull(fornecedorFilter.nome)){
+                query.where(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome+"%"));
+            }
+            else if(Objects.nonNull(fornecedorFilter.razaoSocial)){
+                query.where(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
+            }
+            else if(Objects.nonNull(fornecedorFilter.cnpj)){
+                query.where(qFornecedor.cnpj.likeIgnoreCase("%"+fornecedorFilter.cnpj+"%"));
+            }
+
         }
         return query.fetch();
     }
 
     @Override
     public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
-        return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
+        FornecedorFilter fornecedorFilter = new FornecedorFilter();
+        fornecedorFilter.setCnpj(fornecedorDTO.getCnpj());
+        if(Objects.nonNull(this.getSelect(fornecedorFilter))){
+            throw new GenericErrorException("Já existe um fornecedor com esse CNPJ");
+        }else{
+            return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
+        }
     }
 
     @Override

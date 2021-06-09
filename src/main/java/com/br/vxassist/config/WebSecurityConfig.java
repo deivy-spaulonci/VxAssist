@@ -18,6 +18,14 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/configuration/**"
+    };
 
     @Bean
     @Override
@@ -26,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
              User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("admin")
-                .roles("ADMIN")
+                .roles("ADM")
                 .build();
 
         return new InMemoryUserDetailsManager(user);
@@ -35,10 +43,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().authorizeRequests()
-                .antMatchers("/", "/index").permitAll().anyRequest()
-                .fullyAuthenticated()
-                .and().httpBasic().and().csrf().disable();
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/**").authenticated()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .and()
+                .httpBasic()
+                .and()
+                .csrf()
+                .disable();
 
+        /*
+        *  http
+        .authorizeRequests()
+        .anyRequest().authenticated()
+        .and()
+        .formLogin()
+        .and()
+        .httpBasic();
+        * */
 	}
 
     @Bean

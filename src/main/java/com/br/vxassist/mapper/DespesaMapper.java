@@ -9,13 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface DespesaMapper {
-
     DespesaMapper INSTANCE = Mappers.getMapper(DespesaMapper.class);
 
-    Despesa toModel(DespesaDTO bookDTO);
+    Despesa toModel(DespesaDTO despesaDTO);
 
     DespesaDTO toDTO(Despesa despesa);
 
-    List<DespesaDTO> toDespesaDtoList(List<Despesa> despesas);
-
+    List<DespesaDTO> toDespesaDTOtoList(List<Despesa> despesas);
 }

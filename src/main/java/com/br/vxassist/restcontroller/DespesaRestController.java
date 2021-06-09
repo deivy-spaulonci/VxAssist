@@ -4,6 +4,9 @@ import com.br.vxassist.dto.DespesaDTO;
 import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +45,10 @@ public class DespesaRestController implements Serializable {
         return despesaServiceImpl.get(despesaFilter, sort);
     }
 
+    @ApiOperation("Paginação de desepsas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success method return")
+    })
     @GetMapping("/page")
     public Page<DespesaDTO> getPage(@ModelAttribute DespesaFilter despesaFilter,
                              Pageable pageable){
@@ -61,6 +68,7 @@ public class DespesaRestController implements Serializable {
 
     @GetMapping("/{id}")
     public DespesaDTO findById(@PathVariable Long id){
+//        return new ResponseEntity<DespesaDTO>();
         return this.despesaServiceImpl.findDespesaById(id);
     }
 
