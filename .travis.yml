@@ -5,8 +5,8 @@ jdk: openjdk11
 install: true
 addons:
   sonarcloud:
-    organization: $SONAR_ORGANIZATION
-    token: $SONAR_TOKEN
+    organization: deivy-spaulonci
+    token: f8af0653d99ea0edb614d7247c014273ce83bdbc
 script: - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=deivy-spaulonci_VxAssist
 cache:
   directories:
