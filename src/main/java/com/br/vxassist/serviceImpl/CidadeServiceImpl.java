@@ -7,7 +7,7 @@ import com.br.vxassist.mapper.CidadeMapper;
 import com.br.vxassist.model.Cidade;
 import com.br.vxassist.model.QCidade;
 import com.br.vxassist.repository.CidadeRepository;
-import com.br.vxassist.service.CidadeService;
+import com.br.vxassist.service.ServiceInterface;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,16 +15,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public class CidadeServiceImpl implements CidadeService {
-    @PersistenceContext
-    private EntityManager entityManager;
+public class CidadeServiceImpl implements ServiceInterface<CidadeDTO, CidadeFilter> {
 
     @Autowired
     private CidadeRepository cidadeRepository;
@@ -43,6 +39,26 @@ public class CidadeServiceImpl implements CidadeService {
         return cidadeRepository.findAll(getCidadePredicate(cidadeFilter), pageable).map(cidadeMapper::toDTO);
     }
 
+    @Override
+    public CidadeDTO findById(Long id) {
+        return cidadeMapper.toDTO(cidadeRepository.findById(id).orElseThrow(IdNotFound::new));
+    }
+
+    @Override
+    public CidadeDTO save(CidadeDTO cidadeDTO) {
+        return cidadeMapper.toDTO(this.cidadeRepository.save(cidadeMapper.toModel(cidadeDTO)));
+    }
+
+    @Override
+    public Long count() {
+        return cidadeRepository.count();
+    }
+
+    @Override
+    public void excluir(Long id) {
+        this.cidadeRepository.deleteById(id);
+    }
+
     public BooleanBuilder getCidadePredicate(CidadeFilter cidadeFilter){
         QCidade qCidade = QCidade.cidade;
 
@@ -59,11 +75,6 @@ public class CidadeServiceImpl implements CidadeService {
             where.and(qCidade.estado.eq(cidadeFilter.estado));
         }
         return where;
-    }
-
-    @Override
-    public CidadeDTO findCidadeById(Long id) {
-        return cidadeMapper.toDTO(cidadeRepository.findById(id).orElseThrow(IdNotFound::new));
     }
 
 }

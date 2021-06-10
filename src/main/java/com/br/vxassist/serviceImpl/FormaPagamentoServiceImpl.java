@@ -5,20 +5,15 @@ import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.mapper.FormaPagamentoMapper;
 import com.br.vxassist.model.FormaPagamento;
 import com.br.vxassist.repository.FormaPagamentoRepository;
-import com.br.vxassist.service.FormaPagamentoService;
+import com.br.vxassist.service.TipoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
-public class FormaPagamentoServiceImpl implements FormaPagamentoService {
-
-    @PersistenceContext
-    private EntityManager entityManager;
+public class FormaPagamentoServiceImpl implements TipoServiceInterface<FormaPagamentoDTO> {
 
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
@@ -36,7 +31,7 @@ public class FormaPagamentoServiceImpl implements FormaPagamentoService {
     }
 
     @Override
-    public FormaPagamentoDTO findFormaPagamentoById(Long id) {
+    public FormaPagamentoDTO findById(Long id) {
         FormaPagamento formaPagamento = this.formaPagamentoRepository.findById(id).orElseThrow(IdNotFound::new);
         return formaPagamentoMapper.toDTO(formaPagamento);
     }

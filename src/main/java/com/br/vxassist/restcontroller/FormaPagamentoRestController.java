@@ -42,7 +42,7 @@ public class FormaPagamentoRestController implements Serializable {
     @PutMapping
     public ResponseEntity<FormaPagamentoDTO> update(@Valid @RequestBody FormaPagamentoDTO formaPagamentoDTO){
         try{
-            return new ResponseEntity<>(this.formaPagamentoServiceImpl.save(this.formaPagamentoServiceImpl.findFormaPagamentoById(formaPagamentoDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.formaPagamentoServiceImpl.save(this.formaPagamentoServiceImpl.findById(formaPagamentoDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id da Forma de Pagamento não encontrado!");
         }

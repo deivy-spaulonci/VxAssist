@@ -7,7 +7,7 @@ import com.br.vxassist.mapper.ContaMapper;
 import com.br.vxassist.model.Conta;
 import com.br.vxassist.model.QConta;
 import com.br.vxassist.repository.ContaRepository;
-import com.br.vxassist.service.ContaService;
+import com.br.vxassist.service.ServiceInterface;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ContaServiceImpl implements ContaService {
+public class ContaServiceImpl implements ServiceInterface<ContaDTO, ContaFilter> {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -46,36 +46,6 @@ public class ContaServiceImpl implements ContaService {
         return contaRepository.findAll(this.getContaPredicate(contaFilter), pageable).map(contaMapper::toDTO);
     }
 
-    public BooleanBuilder getContaPredicate(ContaFilter contaFilter){
-        QConta qConta = QConta.conta;
-
-        BooleanBuilder where = new BooleanBuilder();
-        if(Objects.nonNull(contaFilter.id)){
-            where.and(qConta.id.eq(contaFilter.id));
-        }
-        if(Objects.nonNull(contaFilter.codigoBarra)){
-            where.and(qConta.codigoBarra.likeIgnoreCase(contaFilter.codigoBarra));
-        }
-        if(Objects.nonNull(contaFilter.tipoConta)){
-            where.and(qConta.tipoConta.eq(contaFilter.tipoConta));
-        }
-        if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
-            where.and(qConta.vencimento.between(contaFilter.getVencimentoInicial(), contaFilter.getVencimentoFinal()));
-        }else if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.isNull(contaFilter.getVencimentoFinal())){
-            where.and(qConta.vencimento.goe(contaFilter.getVencimentoInicial()));
-        }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
-            where.and(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
-        }
-        if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
-            where.and(qConta.emissao.between(contaFilter.getEmissaoInicial(), contaFilter.getEmissaoFinal()));
-        }else if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.isNull(contaFilter.getEmissaoFinal())){
-            where.and(qConta.emissao.goe(contaFilter.getEmissaoInicial()));
-        }else if(Objects.isNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
-            where.and(qConta.emissao.loe(contaFilter.getEmissaoFinal()));
-        }
-        return where;
-    }
-
     @Override
     public ContaDTO save(ContaDTO contaDTO){
         return contaMapper.toDTO(contaRepository.save(contaMapper.toModel(contaDTO)));
@@ -86,7 +56,6 @@ public class ContaServiceImpl implements ContaService {
         return contaRepository.count();
     }
 
-    @Override
     public BigDecimal total(ContaFilter contaFilter) {
         JPAQuery<BigDecimal> query = new JPAQuery<>(this.entityManager);
         QConta qConta = QConta.conta;
@@ -122,13 +91,44 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public ContaDTO findContaById(Long id) {
+    public ContaDTO findById(Long id) {
         Conta conta = this.contaRepository.findById(id).orElseThrow(IdNotFound::new);
         return contaMapper.toDTO(conta);
     }
 
     @Override
-    public void excluirConta(Long id) {
+    public void excluir(Long id) {
         this.contaRepository.deleteById(id);
     }
+
+    public BooleanBuilder getContaPredicate(ContaFilter contaFilter){
+        QConta qConta = QConta.conta;
+
+        BooleanBuilder where = new BooleanBuilder();
+        if(Objects.nonNull(contaFilter.id)){
+            where.and(qConta.id.eq(contaFilter.id));
+        }
+        if(Objects.nonNull(contaFilter.codigoBarra)){
+            where.and(qConta.codigoBarra.likeIgnoreCase(contaFilter.codigoBarra));
+        }
+        if(Objects.nonNull(contaFilter.tipoConta)){
+            where.and(qConta.tipoConta.eq(contaFilter.tipoConta));
+        }
+        if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.between(contaFilter.getVencimentoInicial(), contaFilter.getVencimentoFinal()));
+        }else if(Objects.nonNull(contaFilter.getVencimentoInicial()) && Objects.isNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.goe(contaFilter.getVencimentoInicial()));
+        }else if(Objects.isNull(contaFilter.getVencimentoInicial()) && Objects.nonNull(contaFilter.getVencimentoFinal())){
+            where.and(qConta.vencimento.loe(contaFilter.getVencimentoFinal()));
+        }
+        if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.between(contaFilter.getEmissaoInicial(), contaFilter.getEmissaoFinal()));
+        }else if(Objects.nonNull(contaFilter.getEmissaoInicial()) && Objects.isNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.goe(contaFilter.getEmissaoInicial()));
+        }else if(Objects.isNull(contaFilter.getEmissaoInicial()) && Objects.nonNull(contaFilter.getEmissaoFinal())){
+            where.and(qConta.emissao.loe(contaFilter.getEmissaoFinal()));
+        }
+        return where;
+    }
+
 }

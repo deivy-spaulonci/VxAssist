@@ -50,7 +50,7 @@ public class ContaRestController implements Serializable {
     @PutMapping
     public ResponseEntity<ContaDTO> update(@Valid @RequestBody ContaDTO contaDTO){
         try{
-            return new ResponseEntity<>(this.contaServiceImpl.save(this.contaServiceImpl.findContaById(contaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.contaServiceImpl.save(this.contaServiceImpl.findById(contaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id da Conta não encontrado!");
         }
@@ -68,13 +68,13 @@ public class ContaRestController implements Serializable {
 
     @GetMapping("/{id}")
     public ContaDTO findById(@PathVariable Long id){
-        return this.contaServiceImpl.findContaById(id);
+        return this.contaServiceImpl.findById(id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
-        this.contaServiceImpl.findContaById(id);
-        this.contaServiceImpl.excluirConta(id);
+        this.contaServiceImpl.findById(id);
+        this.contaServiceImpl.excluir(id);
     }
 
 }

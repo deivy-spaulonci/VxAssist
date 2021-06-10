@@ -3,13 +3,12 @@ package com.br.vxassist.serviceImpl;
 import com.br.vxassist.dto.FornecedorDTO;
 import com.br.vxassist.exception.GenericErrorException;
 import com.br.vxassist.exception.IdNotFound;
-import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.filter.FornecedorFilter;
 import com.br.vxassist.mapper.FornecedorMapper;
 import com.br.vxassist.model.Fornecedor;
 import com.br.vxassist.model.QFornecedor;
 import com.br.vxassist.repository.FornecedorRepository;
-import com.br.vxassist.service.FornecedorService;
+import com.br.vxassist.service.ServiceInterface;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class FornecedorServiceImpl implements FornecedorService {
+public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, FornecedorFilter> {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -48,38 +47,16 @@ public class FornecedorServiceImpl implements FornecedorService {
         return fornecedorRepository.findAll(this.getForenecedorPredicate(fornecedorFilter), pageable).map(fornecedorMapper::toDTO);
     }
 
-    public Predicate getForenecedorPredicate(FornecedorFilter fornecedorFilter){
-        QFornecedor qFornecedor = QFornecedor.fornecedor;
-
-        BooleanBuilder where = new BooleanBuilder();
-        if(Objects.nonNull(fornecedorFilter.id)){
-            where.and(qFornecedor.id.eq(fornecedorFilter.id));
-        }
-
-        if(Objects.nonNull(fornecedorFilter.nome) && !fornecedorFilter.nome.trim().isEmpty()){
-            where.and(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome.toLowerCase()+"%"));
-        }
-
-        if(Objects.nonNull(fornecedorFilter.razaoSocial) && !fornecedorFilter.razaoSocial.trim().isEmpty()){
-            where.and(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
-        }
-
-        if(Objects.nonNull(fornecedorFilter.cnpj) && !fornecedorFilter.cnpj.trim().isEmpty()){
-            where.and(qFornecedor.cnpj.likeIgnoreCase("%"+fornecedorFilter.cnpj+"%"));
-        }
-
-        if(Objects.nonNull(fornecedorFilter.cidade)){
-            if(Objects.nonNull(fornecedorFilter.cidade.getId())){
-                where.and(qFornecedor.cidade.id.eq(fornecedorFilter.cidade.getId()));
-            }else if (!fornecedorFilter.cidade.getNome().trim().isEmpty()){
-                where.and(qFornecedor.cidade.nome.likeIgnoreCase("%"+fornecedorFilter.cidade.getNome()+"%"));
-            }
-
-        }
-        return where;
+    @Override
+    public Long count() {
+        return fornecedorRepository.count();
     }
 
     @Override
+    public void excluir(Long id) {
+
+    }
+
     public List<Fornecedor> getSelect(FornecedorFilter fornecedorFilter){
         QFornecedor qFornecedor = QFornecedor.fornecedor;
         JPAQuery query = new JPAQuery(entityManager);
@@ -112,7 +89,38 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
-    public FornecedorDTO findFornecedorById(Long id) {
+    public FornecedorDTO findById(Long id) {
         return fornecedorMapper.toDTO(fornecedorRepository.findById(id).orElseThrow(IdNotFound::new));
+    }
+
+    public Predicate getForenecedorPredicate(FornecedorFilter fornecedorFilter){
+        QFornecedor qFornecedor = QFornecedor.fornecedor;
+
+        BooleanBuilder where = new BooleanBuilder();
+        if(Objects.nonNull(fornecedorFilter.id)){
+            where.and(qFornecedor.id.eq(fornecedorFilter.id));
+        }
+
+        if(Objects.nonNull(fornecedorFilter.nome) && !fornecedorFilter.nome.trim().isEmpty()){
+            where.and(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome.toLowerCase()+"%"));
+        }
+
+        if(Objects.nonNull(fornecedorFilter.razaoSocial) && !fornecedorFilter.razaoSocial.trim().isEmpty()){
+            where.and(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
+        }
+
+        if(Objects.nonNull(fornecedorFilter.cnpj) && !fornecedorFilter.cnpj.trim().isEmpty()){
+            where.and(qFornecedor.cnpj.likeIgnoreCase("%"+fornecedorFilter.cnpj+"%"));
+        }
+
+        if(Objects.nonNull(fornecedorFilter.cidade)){
+            if(Objects.nonNull(fornecedorFilter.cidade.getId())){
+                where.and(qFornecedor.cidade.id.eq(fornecedorFilter.cidade.getId()));
+            }else if (!fornecedorFilter.cidade.getNome().trim().isEmpty()){
+                where.and(qFornecedor.cidade.nome.likeIgnoreCase("%"+fornecedorFilter.cidade.getNome()+"%"));
+            }
+
+        }
+        return where;
     }
 }

@@ -1,7 +1,7 @@
 package com.br.vxassist.controller;
 
 import com.br.vxassist.restcontroller.DespesaRestController;
-import com.br.vxassist.service.DespesaService;
+import com.br.vxassist.service.ServiceInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ public class DespesaControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private DespesaService despesaService;
+    private ServiceInterface serviceInterface;
 
     @InjectMocks
     private DespesaRestController despesaController;

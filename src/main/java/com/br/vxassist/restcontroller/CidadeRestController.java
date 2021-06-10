@@ -40,7 +40,7 @@ public class CidadeRestController implements Serializable {
 
     @GetMapping("/{id}")
     public CidadeDTO findById(@PathVariable Long id){
-        return this.cidadeServiceImpl.findCidadeById(id);
+        return this.cidadeServiceImpl.findById(id);
     }
 
 

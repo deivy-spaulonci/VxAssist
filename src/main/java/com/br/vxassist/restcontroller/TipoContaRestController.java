@@ -40,7 +40,7 @@ public class TipoContaRestController  implements Serializable {
     @PutMapping
     public ResponseEntity<TipoContaDTO> update(@Valid @RequestBody TipoContaDTO tipoContaDTO){
         try{
-            return new ResponseEntity<>(this.tipoContaServiceImpl.save(this.tipoContaServiceImpl.findTipoContaById(tipoContaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.tipoContaServiceImpl.save(this.tipoContaServiceImpl.findById(tipoContaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Tipo de Conta não encontrado!");
         }

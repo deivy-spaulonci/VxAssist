@@ -41,7 +41,7 @@ public class TipoDespesaRestController implements Serializable {
     @PutMapping
     public ResponseEntity<TipoDespesaDTO> update(@Valid @RequestBody TipoDespesaDTO tipoDespesaDTO){
         try{
-            return new ResponseEntity<>(this.tipoDespesaServiceImpl.save(this.tipoDespesaServiceImpl.findTipoDespesaById(tipoDespesaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.tipoDespesaServiceImpl.save(this.tipoDespesaServiceImpl.findById(tipoDespesaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Tipo de Despesa não encontrado!");
         }

@@ -69,7 +69,7 @@ public class DespesaRestController implements Serializable {
     @GetMapping("/{id}")
     public DespesaDTO findById(@PathVariable Long id){
 //        return new ResponseEntity<DespesaDTO>();
-        return this.despesaServiceImpl.findDespesaById(id);
+        return this.despesaServiceImpl.findById(id);
     }
 
     @PostMapping
@@ -80,7 +80,7 @@ public class DespesaRestController implements Serializable {
     @PutMapping
     public ResponseEntity<DespesaDTO> update(@Valid @RequestBody DespesaDTO despesaDTO){
         try{
-            return new ResponseEntity<>(this.despesaServiceImpl.save(this.despesaServiceImpl.findDespesaById(despesaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.despesaServiceImpl.save(this.despesaServiceImpl.findById(despesaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Despesa não encontrado!");
         }
@@ -88,7 +88,7 @@ public class DespesaRestController implements Serializable {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
-        this.despesaServiceImpl.findDespesaById(id);
-        this.despesaServiceImpl.excluirDespesa(id);
+        this.despesaServiceImpl.findById(id);
+        this.despesaServiceImpl.excluir(id);
     }
 }

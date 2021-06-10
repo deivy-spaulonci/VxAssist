@@ -50,7 +50,7 @@ public class FornecedorRestController implements Serializable {
     @GetMapping("/{id}")
     public ResponseEntity<FornecedorDTO> findFornecedorById(@PathVariable("id") Long id){
         try{
-            FornecedorDTO fornecedorDTO = fornecedorServiceImpl.findFornecedorById(id);
+            FornecedorDTO fornecedorDTO = fornecedorServiceImpl.findById(id);
             return new ResponseEntity<>(fornecedorDTO, HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Fornecedor não encontrado!");
@@ -70,7 +70,7 @@ public class FornecedorRestController implements Serializable {
     @PutMapping
     public ResponseEntity<FornecedorDTO> update(@Valid @RequestBody FornecedorDTO fornecedorDTO){
         try{
-            return new ResponseEntity<>(this.fornecedorServiceImpl.save(this.fornecedorServiceImpl.findFornecedorById(fornecedorDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.fornecedorServiceImpl.save(this.fornecedorServiceImpl.findById(fornecedorDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
             throw new NotFoundException("Id do Fornecedor não encontrado!");
         }
