@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -84,7 +85,9 @@ public class DespesaServiceImpl implements ServiceInterface<DespesaDTO, DespesaF
                 query.where(qDespesa.fornecedor.id.eq(despesaFilter.getFornecedor().getId()));
             }
             if(Objects.nonNull(despesaFilter.fornecedor.getNome()) && !despesaFilter.fornecedor.getNome().trim().isEmpty()){
-                query.where(qDespesa.fornecedor.nome.toLowerCase().likeIgnoreCase(despesaFilter.fornecedor.getNome().toLowerCase()));
+                query.where(qDespesa.fornecedor.nome.toLowerCase().likeIgnoreCase(despesaFilter.fornecedor.getNome().toLowerCase())
+                        .or(qDespesa.fornecedor.razaoSocial.toLowerCase().likeIgnoreCase(despesaFilter.fornecedor.getNome().toLowerCase())));
+
             }
         }
         if(Objects.nonNull(despesaFilter.getDataInicial()) && Objects.nonNull(despesaFilter.getDataFinal())){
@@ -117,6 +120,7 @@ public class DespesaServiceImpl implements ServiceInterface<DespesaDTO, DespesaF
             }
             if(Objects.nonNull(despesaFilter.fornecedor.getNome()) && !despesaFilter.fornecedor.getNome().trim().isEmpty()){
                 where.and(qDespesa.fornecedor.nome.toLowerCase().likeIgnoreCase('%'+despesaFilter.fornecedor.getNome().toLowerCase()+'%'));
+                where.or(qDespesa.fornecedor.razaoSocial.toLowerCase().likeIgnoreCase('%'+despesaFilter.fornecedor.getNome().toLowerCase()+'%'));
             }
         }
         if(Objects.nonNull(despesaFilter.getDataInicial()) && Objects.nonNull(despesaFilter.getDataFinal())){

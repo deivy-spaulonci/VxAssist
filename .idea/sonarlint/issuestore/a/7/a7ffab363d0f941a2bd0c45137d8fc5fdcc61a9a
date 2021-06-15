@@ -1,0 +1,10 @@
+
+w
+java:S2629"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(ŽåËªøÿÿÿÿ
+H
+java:S1611"2Remove the parentheses around the "args" parameter(£Ù€ò
+B
+java:S1602",Remove useless curly braces around statement(£Ù€ò
+\
+java:S3457"AFormat specifiers should be used instead of string concatenation.(ŽåËªøÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(¬†¥ýÿÿÿÿ

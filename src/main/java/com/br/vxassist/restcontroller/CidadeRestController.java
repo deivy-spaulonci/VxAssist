@@ -2,7 +2,6 @@ package com.br.vxassist.restcontroller;
 
 import com.br.vxassist.dto.CidadeDTO;
 import com.br.vxassist.filter.CidadeFilter;
-import com.br.vxassist.model.Cidade;
 import com.br.vxassist.serviceImpl.CidadeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

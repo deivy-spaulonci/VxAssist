@@ -18,7 +18,4 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long>,
 //    Page<Customer> search(
 //            @Param("searchTerm") String searchTerm,
 //            Pageable pageable);
-
-
-
 }

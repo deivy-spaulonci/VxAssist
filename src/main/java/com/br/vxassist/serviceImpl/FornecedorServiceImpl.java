@@ -63,11 +63,10 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
         query.select(qFornecedor.id, qFornecedor.nome);
         query.from(qFornecedor);
         if(Objects.nonNull(fornecedorFilter)){
-            if(Objects.nonNull(fornecedorFilter.nome)){
-                query.where(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome+"%"));
-            }
-            else if(Objects.nonNull(fornecedorFilter.razaoSocial)){
-                query.where(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
+            if((Objects.nonNull(fornecedorFilter.nome) && Objects.nonNull(fornecedorFilter.nome))
+                || (Objects.nonNull(fornecedorFilter.razaoSocial))){
+                query.where(qFornecedor.nome.toLowerCase().likeIgnoreCase("%"+fornecedorFilter.nome.toLowerCase()+"%")
+                        .or(qFornecedor.razaoSocial.toLowerCase().likeIgnoreCase("%"+fornecedorFilter.razaoSocial.toLowerCase()+"%")));
             }
             else if(Objects.nonNull(fornecedorFilter.cnpj)){
                 query.where(qFornecedor.cnpj.likeIgnoreCase("%"+fornecedorFilter.cnpj+"%"));
@@ -81,7 +80,8 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
     public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
         FornecedorFilter fornecedorFilter = new FornecedorFilter();
         fornecedorFilter.setCnpj(fornecedorDTO.getCnpj());
-        if(Objects.nonNull(this.getSelect(fornecedorFilter))){
+        List<Fornecedor>  lista  = this.getSelect(fornecedorFilter);
+        if(Objects.nonNull(lista) && !lista.isEmpty()){
             throw new GenericErrorException("Já existe um fornecedor com esse CNPJ");
         }else{
             return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
@@ -101,12 +101,10 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
             where.and(qFornecedor.id.eq(fornecedorFilter.id));
         }
 
-        if(Objects.nonNull(fornecedorFilter.nome) && !fornecedorFilter.nome.trim().isEmpty()){
-            where.and(qFornecedor.nome.likeIgnoreCase("%"+fornecedorFilter.nome.toLowerCase()+"%"));
-        }
-
-        if(Objects.nonNull(fornecedorFilter.razaoSocial) && !fornecedorFilter.razaoSocial.trim().isEmpty()){
-            where.and(qFornecedor.razaoSocial.likeIgnoreCase("%"+fornecedorFilter.razaoSocial+"%"));
+        if(Objects.nonNull(fornecedorFilter.nome) && !fornecedorFilter.nome.trim().isEmpty()
+            || Objects.nonNull(fornecedorFilter.razaoSocial) && !fornecedorFilter.razaoSocial.trim().isEmpty()){
+            where.and(qFornecedor.nome.toLowerCase().likeIgnoreCase("%"+fornecedorFilter.nome.toLowerCase()+"%"));
+            where.or(qFornecedor.razaoSocial.toLowerCase().likeIgnoreCase("%"+fornecedorFilter.razaoSocial.toLowerCase()+"%"));
         }
 
         if(Objects.nonNull(fornecedorFilter.cnpj) && !fornecedorFilter.cnpj.trim().isEmpty()){

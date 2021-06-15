@@ -62,7 +62,8 @@ public class FornecedorRestController implements Serializable {
         try{
             return new ResponseEntity<>(this.fornecedorServiceImpl.save(fornecedorDTO), HttpStatus.CREATED);
         }catch (Exception ex){
-            return new ResponseEntity<>(ex.getMessage(), null, HttpStatus.BAD_REQUEST);
+            ex.printStackTrace();
+             return new ResponseEntity<>(ex.getMessage(), null, HttpStatus.BAD_REQUEST);
         }
 
     }

@@ -87,14 +87,13 @@
 			<optional>true</optional>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1206-jdbc42</version>
 		</dependency>
 
-<!--QUERYDSL		-->
+<!--QUERYDSL-->
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
