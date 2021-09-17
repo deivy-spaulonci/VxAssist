@@ -13,8 +13,6 @@ e
 5src/main/java/com/br/vxassist/VxPayofApplication.java,a/7/a7ffab363d0f941a2bd0c45137d8fc5fdcc61a9a
 f
 6src/main/java/com/br/vxassist/validacao/Validacao.java,c/c/ccc208ed7d36b33a718923cf9c0ecc10596fad00
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 ~
 Nsrc/main/java/com/br/vxassist/custominfoendpoint/InfoWebEndPointExtension.java,e/b/ebd804720d92e271ee1f767f1afad9a226521bda
 p
