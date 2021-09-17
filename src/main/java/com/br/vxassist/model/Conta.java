@@ -72,7 +72,7 @@ public class Conta implements Serializable {
     @Column(name = "VALOR_PAGO", precision = 10, scale = 2, nullable = true)
     private BigDecimal valorPago;
 
-    //cancelamento
+    //CANCELAMENTO
     private Boolean cancelado;
 
     @Column(name = "ID_CANCELAMENTO")

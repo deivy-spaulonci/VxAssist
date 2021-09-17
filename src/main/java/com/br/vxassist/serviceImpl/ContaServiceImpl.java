@@ -1,7 +1,6 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.ContaDTO;
-import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.ContaFilter;
 import com.br.vxassist.mapper.ContaMapper;
 import com.br.vxassist.model.Conta;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ContaServiceImpl implements ServiceInterface<ContaDTO, ContaFilter>
     }
 
     @Override
-    public ContaDTO save(ContaDTO contaDTO){
+    public ContaDTO create(ContaDTO contaDTO){
         return contaMapper.toDTO(contaRepository.save(contaMapper.toModel(contaDTO)));
     }
 
@@ -92,7 +92,7 @@ public class ContaServiceImpl implements ServiceInterface<ContaDTO, ContaFilter>
 
     @Override
     public ContaDTO findById(Long id) {
-        Conta conta = this.contaRepository.findById(id).orElseThrow(IdNotFound::new);
+        Conta conta = this.contaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return contaMapper.toDTO(conta);
     }
 

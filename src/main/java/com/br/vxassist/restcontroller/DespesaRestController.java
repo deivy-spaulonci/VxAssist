@@ -1,7 +1,6 @@
 package com.br.vxassist.restcontroller;
 
 import com.br.vxassist.dto.DespesaDTO;
-import com.br.vxassist.exception.NotFoundException;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.serviceImpl.DespesaServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -74,15 +74,15 @@ public class DespesaRestController implements Serializable {
 
     @PostMapping
     public ResponseEntity<DespesaDTO> save(@Valid @RequestBody DespesaDTO despesaDTO){
-        return new ResponseEntity<>(this.despesaServiceImpl.save(despesaDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.despesaServiceImpl.create(despesaDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<DespesaDTO> update(@Valid @RequestBody DespesaDTO despesaDTO){
         try{
-            return new ResponseEntity<>(this.despesaServiceImpl.save(this.despesaServiceImpl.findById(despesaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.despesaServiceImpl.create(this.despesaServiceImpl.findById(despesaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
-            throw new NotFoundException("Id do Despesa não encontrado!");
+            throw new EntityNotFoundException("Id do Despesa não encontrado!");
         }
     }
 

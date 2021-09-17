@@ -6,12 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public interface ServiceInterface<D, F> {
+public interface ServiceInterface<D, F>{
     List<D> get(F filter, Sort sort);
 
     Page<D> getPage(F filter, Pageable peageble);
 
-    D save(D dto);
+    D create(D dto);
 
     Long count();
 

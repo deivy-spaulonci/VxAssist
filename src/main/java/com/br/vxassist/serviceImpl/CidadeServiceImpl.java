@@ -1,7 +1,6 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.CidadeDTO;
-import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.CidadeFilter;
 import com.br.vxassist.mapper.CidadeMapper;
 import com.br.vxassist.model.Cidade;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,23 +30,18 @@ public class CidadeServiceImpl implements ServiceInterface<CidadeDTO, CidadeFilt
     @Override
     public List<CidadeDTO> get(CidadeFilter cidadeFilter, Sort sort){
         List<Cidade> cidades = new ArrayList<>();
-        cidadeRepository.findAll(getCidadePredicate(cidadeFilter), sort).forEach(cidades::add);
+        cidadeRepository.findAll(getCidadePredicate(cidadeFilter), Sort.by("nome").ascending()).forEach(cidades::add);
         return cidadeMapper.toCidadeDTOtoList(cidades);
     }
 
     @Override
-    public Page<CidadeDTO> getPage(CidadeFilter cidadeFilter, Pageable pageable) {
-        return cidadeRepository.findAll(getCidadePredicate(cidadeFilter), pageable).map(cidadeMapper::toDTO);
+    public Page<CidadeDTO> getPage(CidadeFilter filter, Pageable peageble) {
+        return null;
     }
 
     @Override
-    public CidadeDTO findById(Long id) {
-        return cidadeMapper.toDTO(cidadeRepository.findById(id).orElseThrow(IdNotFound::new));
-    }
-
-    @Override
-    public CidadeDTO save(CidadeDTO cidadeDTO) {
-        return cidadeMapper.toDTO(this.cidadeRepository.save(cidadeMapper.toModel(cidadeDTO)));
+    public CidadeDTO create(CidadeDTO dto) {
+        return null;
     }
 
     @Override
@@ -55,8 +50,13 @@ public class CidadeServiceImpl implements ServiceInterface<CidadeDTO, CidadeFilt
     }
 
     @Override
+    public CidadeDTO findById(Long id) {
+        return cidadeMapper.toDTO(cidadeRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+    }
+
+    @Override
     public void excluir(Long id) {
-        this.cidadeRepository.deleteById(id);
+        return;
     }
 
     public BooleanBuilder getCidadePredicate(CidadeFilter cidadeFilter){
@@ -76,5 +76,7 @@ public class CidadeServiceImpl implements ServiceInterface<CidadeDTO, CidadeFilt
         }
         return where;
     }
+
+
 
 }

@@ -54,17 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
-
-        /*
-        *  http
-        .authorizeRequests()
-        .anyRequest().authenticated()
-        .and()
-        .formLogin()
-        .and()
-        .httpBasic();
-        * */
 	}
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){

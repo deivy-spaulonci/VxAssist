@@ -1,20 +1,16 @@
 
-Y	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ÿÉ£¥
-d	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñËØ—
-{
-java:S1488"bImmediately return this expression instead of assigning it to the temporary variable "resultPage".(òìĞ³ıÿÿÿÿ
-O
-java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ
+[	java:S112e"FDefine and throw a dedicated exception instead of using a generic one.(ÿÉ£¥
+f	java:S117R"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñËØ—
+}
+java:S1488,"bImmediately return this expression instead of assigning it to the temporary variable "resultPage".(òìĞ³ıÿÿÿÿ
+Y
+java:S1948"7Make "fornecedorServiceImpl" transient or serializable.(ÃŞáÜùÿÿÿÿ8Ùã°±¡/
 Q
-java:S1128"=Remove this unused import 'com.br.vxassist.model.Fornecedor'.(âëÊ
-P
-java:S1948"7Make "fornecedorServiceImpl" transient or serializable.(ÃŞáÜùÿÿÿÿ
-O
-java:S6212"/Declare this local variable with "var" instead.(ª£ïÔúÿÿÿÿ8Ñ¹½Ÿ/
-F
-java:S1452"&Remove usage of generic wildcard type.(»ÔÔŞıÿÿÿÿ8³‘ÆÜŸ/
-Q	java:S106"9Replace this use of System.out or System.err by a logger.(á“§ãıÿÿÿÿ
-B
-java:S6212"/Declare this local variable with "var" instead.(Â«Š`
-C
-java:S6212"/Declare this local variable with "var" instead.(÷ùı­
+java:S62123"/Declare this local variable with "var" instead.(ª£ïÔúÿÿÿÿ8Ûã°±¡/
+H
+java:S1452;"&Remove usage of generic wildcard type.(»ÔÔŞıÿÿÿÿ8³‘ÆÜŸ/
+S	java:S106["9Replace this use of System.out or System.err by a logger.(á“§ãıÿÿÿÿ
+D
+java:S6212h"/Declare this local variable with "var" instead.(Â«Š`
+E
+java:S6212i"/Declare this local variable with "var" instead.(÷ùı­

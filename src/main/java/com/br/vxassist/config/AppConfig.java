@@ -16,11 +16,4 @@ public class AppConfig {
         source.setUseCodeAsDefaultMessage(true);
         return source;
     }
-
-    @Bean
-    public LocalValidatorFactoryBean validator() {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-        bean.setValidationMessageSource(messageSource());
-        return bean;
-    }
 }

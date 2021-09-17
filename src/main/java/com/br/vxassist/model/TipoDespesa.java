@@ -32,7 +32,7 @@ public class TipoDespesa implements Serializable {
 
     @Size(min = 3, message = "{size.tipo-despesa.nome}")
     @NotBlank(message = "{notblank.tipo-despesa.nome}")
-    @Column(length = 60, nullable = false)
+    @Column(length = 60, nullable = false, unique= true)
     private String nome;
 
     @Override

@@ -1,7 +1,6 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.DespesaDTO;
-import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.DespesaFilter;
 import com.br.vxassist.mapper.DespesaMapper;
 import com.br.vxassist.model.Despesa;
@@ -17,11 +16,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -48,7 +47,7 @@ public class DespesaServiceImpl implements ServiceInterface<DespesaDTO, DespesaF
     }
 
     @Override
-    public DespesaDTO save(DespesaDTO despesaDTO){
+    public DespesaDTO create(DespesaDTO despesaDTO){
         return despesaMapper.toDTO(despesaRepository.save(despesaMapper.toModel(despesaDTO)));
     }
 
@@ -59,7 +58,7 @@ public class DespesaServiceImpl implements ServiceInterface<DespesaDTO, DespesaF
 
     @Override
     public DespesaDTO findById(Long id) {
-        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(IdNotFound::new);
+        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return despesaMapper.toDTO(despesa);
     }
 

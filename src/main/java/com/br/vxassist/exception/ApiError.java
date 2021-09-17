@@ -15,10 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiError {
+
     private int code;
+
     private String status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy hh:mm:ss")
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
+
     private String message;
+
     private List<String> errors;
 }

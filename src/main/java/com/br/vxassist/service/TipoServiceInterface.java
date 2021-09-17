@@ -1,11 +1,13 @@
 package com.br.vxassist.service;
 
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 
-public interface TipoServiceInterface<D>{
-    List<D> get();
+public interface TipoServiceInterface<D, F>{
+    List<D> get(F filter);
 
-    D save(D dto);
+    D create(D dto);
 
-    D findById(Long id);
+    void update(D dto);
 }

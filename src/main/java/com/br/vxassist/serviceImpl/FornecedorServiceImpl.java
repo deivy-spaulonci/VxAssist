@@ -1,8 +1,6 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.FornecedorDTO;
-import com.br.vxassist.exception.GenericErrorException;
-import com.br.vxassist.exception.IdNotFound;
 import com.br.vxassist.filter.FornecedorFilter;
 import com.br.vxassist.mapper.FornecedorMapper;
 import com.br.vxassist.model.Fornecedor;
@@ -19,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +76,12 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
     }
 
     @Override
-    public FornecedorDTO save(FornecedorDTO fornecedorDTO) {
+    public FornecedorDTO create(FornecedorDTO fornecedorDTO) {
         FornecedorFilter fornecedorFilter = new FornecedorFilter();
         fornecedorFilter.setCnpj(fornecedorDTO.getCnpj());
         List<Fornecedor>  lista  = this.getSelect(fornecedorFilter);
         if(Objects.nonNull(lista) && !lista.isEmpty()){
-            throw new GenericErrorException("Já existe um fornecedor com esse CNPJ");
+            throw new RuntimeException("Já existe um fornecedor com esse CNPJ");
         }else{
             return fornecedorMapper.toDTO(fornecedorRepository.save(fornecedorMapper.toModel(fornecedorDTO)));
         }
@@ -90,7 +89,7 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
 
     @Override
     public FornecedorDTO findById(Long id) {
-        return fornecedorMapper.toDTO(fornecedorRepository.findById(id).orElseThrow(IdNotFound::new));
+        return fornecedorMapper.toDTO(fornecedorRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
     public Predicate getForenecedorPredicate(FornecedorFilter fornecedorFilter){

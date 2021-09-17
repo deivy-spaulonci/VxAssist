@@ -1,7 +1,7 @@
 package com.br.vxassist.restcontroller;
 
 
-import com.br.vxassist.exception.NotFoundException;
+import com.br.vxassist.dto.ContaDTO;
 import com.br.vxassist.filter.ContaFilter;
 import com.br.vxassist.serviceImpl.ContaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import com.br.vxassist.dto.ContaDTO;
 
 @RestController
 @RequestMapping("/api/v1/conta")
@@ -44,15 +44,15 @@ public class ContaRestController implements Serializable {
 
     @PostMapping
     public ResponseEntity<ContaDTO> save(@Valid @RequestBody ContaDTO contaDTO){
-        return new ResponseEntity<>(this.contaServiceImpl.save(contaDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.contaServiceImpl.create(contaDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<ContaDTO> update(@Valid @RequestBody ContaDTO contaDTO){
         try{
-            return new ResponseEntity<>(this.contaServiceImpl.save(this.contaServiceImpl.findById(contaDTO.getId())), HttpStatus.OK);
+            return new ResponseEntity<>(this.contaServiceImpl.create(this.contaServiceImpl.findById(contaDTO.getId())), HttpStatus.OK);
         }catch (Exception ex) {
-            throw new NotFoundException("Id da Conta não encontrado!");
+            throw new EntityNotFoundException("Id da Conta não encontrado!");
         }
     }
 

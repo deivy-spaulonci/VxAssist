@@ -1,16 +1,14 @@
 package com.br.vxassist.restcontroller;
 
 import com.br.vxassist.dto.FormaPagamentoDTO;
-import com.br.vxassist.dto.FornecedorDTO;
-import com.br.vxassist.exception.NotFoundException;
-import com.br.vxassist.model.FormaPagamento;
-import com.br.vxassist.model.Fornecedor;
+import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.serviceImpl.FormaPagamentoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
@@ -30,21 +28,22 @@ public class FormaPagamentoRestController implements Serializable {
     }
 
     @GetMapping()
-    public List<FormaPagamentoDTO> get(){
-        return formaPagamentoServiceImpl.get();
+    public List<FormaPagamentoDTO> get(@ModelAttribute TipoFilter tipoFilter){
+        return formaPagamentoServiceImpl.get(tipoFilter);
     }
 
     @PostMapping
     public ResponseEntity<FormaPagamentoDTO> save(@Valid @RequestBody FormaPagamentoDTO formaPagamentoDTO){
-        return new ResponseEntity<>(this.formaPagamentoServiceImpl.save(formaPagamentoDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.formaPagamentoServiceImpl.create(formaPagamentoDTO), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<FormaPagamentoDTO> update(@Valid @RequestBody FormaPagamentoDTO formaPagamentoDTO){
+    public ResponseEntity<?> update(@Valid @RequestBody FormaPagamentoDTO formaPagamentoDTO){
         try{
-            return new ResponseEntity<>(this.formaPagamentoServiceImpl.save(this.formaPagamentoServiceImpl.findById(formaPagamentoDTO.getId())), HttpStatus.OK);
+            this.formaPagamentoServiceImpl.update(formaPagamentoDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception ex) {
-            throw new NotFoundException("Id da Forma de Pagamento não encontrado!");
+            throw new EntityNotFoundException("Id da Forma de Pagamento não encontrado!");
         }
     }
 
