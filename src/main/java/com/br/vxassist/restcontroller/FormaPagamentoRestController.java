@@ -4,6 +4,7 @@ import com.br.vxassist.dto.FormaPagamentoDTO;
 import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.serviceImpl.FormaPagamentoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class FormaPagamentoRestController implements Serializable {
 
     @GetMapping()
     public List<FormaPagamentoDTO> get(@ModelAttribute TipoFilter tipoFilter){
-        return formaPagamentoServiceImpl.get(tipoFilter);
+        return formaPagamentoServiceImpl.get(tipoFilter, Sort.by("nome").ascending());
     }
 
     @PostMapping

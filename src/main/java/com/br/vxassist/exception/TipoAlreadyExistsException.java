@@ -4,6 +4,6 @@ import javax.persistence.EntityExistsException;
 
 public class TipoAlreadyExistsException extends EntityExistsException {
     public TipoAlreadyExistsException(String nome) {
-        super(String.format("Tipo com esse nome: %s, já existe", nome));
+        super(String.format("Tipo com esse id/nome: %s, já existe", nome));
     }
 }

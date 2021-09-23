@@ -13,6 +13,8 @@ public interface ServiceInterface<D, F>{
 
     D create(D dto);
 
+    void update(D dto);
+
     Long count();
 
     D findById(Long id);

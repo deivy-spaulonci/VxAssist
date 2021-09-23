@@ -5,6 +5,7 @@ import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.serviceImpl.TipoContaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class TipoContaRestController  implements Serializable {
 
     @GetMapping()
     public List<TipoContaDTO> get(@ModelAttribute TipoFilter tipoFilter){
-        return tipoContaServiceImpl.get(tipoFilter);
+        return tipoContaServiceImpl.get(tipoFilter, Sort.by("nome").ascending());
     }
 
     @PostMapping

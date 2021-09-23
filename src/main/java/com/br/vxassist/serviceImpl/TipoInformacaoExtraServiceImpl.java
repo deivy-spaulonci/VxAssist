@@ -1,16 +1,17 @@
 package com.br.vxassist.serviceImpl;
 
 import com.br.vxassist.dto.TipoInformacaoExtraDTO;
-import com.br.vxassist.exception.TipoAlreadyExistsException;
 import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.mapper.TipoInformacaoExtraMapper;
 import com.br.vxassist.model.QTipoInformacaoExtra;
 import com.br.vxassist.model.TipoInformacaoExtra;
 import com.br.vxassist.repository.TipoInformacaoExtraRepository;
-import com.br.vxassist.service.TipoServiceInterface;
+import com.br.vxassist.service.ServiceInterface;
 import com.querydsl.core.BooleanBuilder;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class TipoInformacaoExtraServiceImpl implements TipoServiceInterface<TipoInformacaoExtraDTO, TipoFilter> {
+public class TipoInformacaoExtraServiceImpl implements ServiceInterface<TipoInformacaoExtraDTO, TipoFilter> {
 
     @Autowired
     private TipoInformacaoExtraRepository tipoInformacaoExtraRepository;
@@ -28,10 +29,15 @@ public class TipoInformacaoExtraServiceImpl implements TipoServiceInterface<Tipo
     private final TipoInformacaoExtraMapper tipoInformacaoExtraMapper = TipoInformacaoExtraMapper.INSTANCE;
 
     @Override
-    public List<TipoInformacaoExtraDTO> get(TipoFilter filter) {
+    public List<TipoInformacaoExtraDTO> get(TipoFilter filter, Sort sort) {
         List<TipoInformacaoExtra> tiposInformacaoExtra = new ArrayList<>();
-        tipoInformacaoExtraRepository.findAll(getTipoInformacaoExtraPredicate(filter), Sort.by("nome").ascending()).forEach(tiposInformacaoExtra::add);
+        tipoInformacaoExtraRepository.findAll(getTipoInformacaoExtraPredicate(filter), sort).forEach(tiposInformacaoExtra::add);
         return tipoInformacaoExtraMapper.toTipoInformacaoExtraDtoList(tiposInformacaoExtra);
+    }
+
+    @Override
+    public Page<TipoInformacaoExtraDTO> getPage(TipoFilter filter, Pageable peageble) {
+        return null;
     }
 
     @Override
@@ -43,6 +49,21 @@ public class TipoInformacaoExtraServiceImpl implements TipoServiceInterface<Tipo
     public void update(TipoInformacaoExtraDTO tipoInformacaoExtraDTO) {
         tipoInformacaoExtraRepository.findById(tipoInformacaoExtraDTO.getId()).orElseThrow(EntityNotFoundException::new);
         tipoInformacaoExtraRepository.save(tipoInformacaoExtraMapper.toModel(tipoInformacaoExtraDTO));
+    }
+
+    @Override
+    public Long count() {
+        return null;
+    }
+
+    @Override
+    public TipoInformacaoExtraDTO findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void excluir(Long id) {
+
     }
 
     private BooleanBuilder getTipoInformacaoExtraPredicate(TipoFilter tipoFilter){

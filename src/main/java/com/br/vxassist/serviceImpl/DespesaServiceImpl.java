@@ -52,6 +52,11 @@ public class DespesaServiceImpl implements ServiceInterface<DespesaDTO, DespesaF
     }
 
     @Override
+    public void update(DespesaDTO dto) {
+
+    }
+
+    @Override
     public Long count() {
         return despesaRepository.count();
     }

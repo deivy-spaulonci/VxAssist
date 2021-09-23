@@ -52,6 +52,11 @@ public class ContaServiceImpl implements ServiceInterface<ContaDTO, ContaFilter>
     }
 
     @Override
+    public void update(ContaDTO dto) {
+
+    }
+
+    @Override
     public Long count() {
         return contaRepository.count();
     }

@@ -88,6 +88,11 @@ public class FornecedorServiceImpl implements ServiceInterface<FornecedorDTO, Fo
     }
 
     @Override
+    public void update(FornecedorDTO dto) {
+
+    }
+
+    @Override
     public FornecedorDTO findById(Long id) {
         return fornecedorMapper.toDTO(fornecedorRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }

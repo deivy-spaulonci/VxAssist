@@ -45,6 +45,11 @@ public class CidadeServiceImpl implements ServiceInterface<CidadeDTO, CidadeFilt
     }
 
     @Override
+    public void update(CidadeDTO dto) {
+
+    }
+
+    @Override
     public Long count() {
         return cidadeRepository.count();
     }

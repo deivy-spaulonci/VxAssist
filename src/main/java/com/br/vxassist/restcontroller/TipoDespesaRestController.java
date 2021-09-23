@@ -6,6 +6,7 @@ import com.br.vxassist.dto.TipoDespesaDTO;
 import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.serviceImpl.TipoDespesaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class TipoDespesaRestController implements TipoControllerDocs<TipoDespesa
 
     @GetMapping()
     public List<TipoDespesaDTO> get(@ModelAttribute TipoFilter tipoFilter){
-        return tipoDespesaServiceImpl.get(tipoFilter);
+        return tipoDespesaServiceImpl.get(tipoFilter, Sort.by("nome").ascending());
     }
 
     @PostMapping

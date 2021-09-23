@@ -1,6 +1,4 @@
 
 7
-java:S1170"!Make this final field static too.(‚ã´¶
-8
-java:S3626;"Remove this redundant jump.(ûÁİ…8•ÎŒ‡¾/
+java:S1170"!Make this final field static too.(ËëÚÙ
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(áÒãÛ

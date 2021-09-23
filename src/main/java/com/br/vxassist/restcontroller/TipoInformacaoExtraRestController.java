@@ -4,6 +4,7 @@ import com.br.vxassist.dto.TipoInformacaoExtraDTO;
 import com.br.vxassist.filter.TipoFilter;
 import com.br.vxassist.serviceImpl.TipoInformacaoExtraServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class TipoInformacaoExtraRestController implements Serializable {
 
     @GetMapping()
     public List<TipoInformacaoExtraDTO> get(@ModelAttribute TipoFilter tipoFilter){
-        return tipoInformacaoExtraServiceImpl.get(tipoFilter);
+        return tipoInformacaoExtraServiceImpl.get(tipoFilter, Sort.by("nome").ascending());
     }
 
     @PostMapping
